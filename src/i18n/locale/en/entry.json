@@ -1,6 +1,7 @@
 {
   "username": "Username",
   "password": "Password",
+  "otp": "OTP",
   "confirmPassword": "Confirm Password",
   "remember": "Remember Me",
   "login": "Log In",
@@ -11,6 +12,7 @@
   "useOtherLoginMethods": "Other login methods",
   "usernameRequired": "Username is required",
   "passwordRequired": "Password is required",
+  "otpRequired": "Authenticator is required",
   "phoneNumber": "Phone number",
   "verificationCode": "Verification Code",
   "passwordResetNotAvailable": "Password reset is not supported yet~",

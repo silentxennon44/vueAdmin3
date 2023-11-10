@@ -3,8 +3,11 @@ import LoginForm from './components/LoginForm.vue'
 import ForgetPasswordForm from './components/ForgetPasswordForm.vue'
 import MobileForm from './components/MobileForm.vue'
 import QrCodeForm from './components/QrCodeForm.vue'
-import RegisterForm from './components/RegisterForm.vue'
+import AuthenticateForm from './components/googleAuthenticatorForm.vue'
+// import RegisterForm from './components/RegisterForm.vue'
 import Plum from '~/components/Plum.vue'
+
+
 </script>
 
 <template>
@@ -14,9 +17,10 @@ import Plum from '~/components/Plum.vue'
     <div class="w-475px">
       <login-form />
       <forget-password-form />
-      <mobile-form />
-      <qr-code-form />
-      <register-form />
+      <authenticate-form />
+      <!-- <mobile-form /> -->
+      <!-- <qr-code-form /> -->
+      <!-- <register-form /> -->
     </div>
   </div>
 </template>

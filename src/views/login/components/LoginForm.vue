@@ -16,7 +16,8 @@ const { t } = useI18n()
 
 interface FormState {
   username: string
-  password: string
+  password: string,
+  authenticator?: string
 }
 
 const { setLoginState, getLoginState } = useLoginState()
@@ -30,7 +31,7 @@ const formRules = {
   ],
   password: [
     { required: true, message: t('entry.passwordRequired'), trigger: 'blur' }
-  ]
+  ],
 }
 
 const formRef = ref<FormInstance>()
@@ -39,7 +40,8 @@ const remember = ref(true)
 
 const formData = reactive<FormState>({
   username: '',
-  password: ''
+  password: '',
+  authenticator:''
 })
 
 const user = useUserStore()
@@ -82,6 +84,17 @@ const handleLogin = async () => {
       />
     </a-form-item>
 
+    <a-form-item
+      class="enter-x"
+      name="authenticator"
+    >
+      <a-input
+        v-model:value="formData.authenticator"
+        :placeholder= "t('entry.otp')"
+        size="large"
+      />
+    </a-form-item>
+
     <a-row class="enter-x">
       <a-col :span="12">
         <a-form-item class="enter-x">
@@ -105,7 +118,7 @@ const handleLogin = async () => {
       </a-button>
     </a-form-item>
 
-    <a-row class="enter-x" justify="space-between">
+    <!-- <a-row class="enter-x" justify="space-around">
       <a-col :span="7">
         <a-button block @click="setLoginState(LoginStateEnum.MOBILE)">
          {{ t('entry.usePhone')}}
@@ -121,18 +134,18 @@ const handleLogin = async () => {
          {{ t('entry.register')}}
         </a-button>
       </a-col>
-    </a-row>
+    </a-row> -->
 
-    <a-divider class="enter-x">
+    <!-- <a-divider class="enter-x">
       {{ t('entry.useOtherLoginMethods')}}
-    </a-divider>
+    </a-divider> -->
 
-    <div class="flex justify-evenly enter-x sign-in-way">
+    <!-- <div class="flex justify-evenly enter-x sign-in-way">
       <GithubFilled />
       <WechatFilled />
       <AlipayCircleFilled />
       <GoogleCircleFilled />
       <TwitterCircleFilled />
-    </div>
+    </div> -->
   </a-form>
 </template>

@@ -8,6 +8,9 @@ import { mapMenuToRoutes } from '~/utils/map-menu'
 
 import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
+import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
+
+const { setLoginState, getLoginState } = useLoginState()
 
 interface UserState {
   token?: string
@@ -82,6 +85,10 @@ export const useUserStore = defineStore('user', {
       }
     },
 
+    async authenticateAction(account: { username: string; password: string, code:string }) {
+      console.log(account)
+    },
+
     async afterLoginAction() {
       if (!this.getToken)
         return null
@@ -90,15 +97,22 @@ export const useUserStore = defineStore('user', {
       await this.getUserInfoAction()
 
       // get menu list
-      await this.getMenuListAction()
+      // await this.getMenuListAction()
+      const userInfo = await getUserInfo()
 
-      router.push(EnumPath.HOME)
+      if (userInfo.is_new && Boolean(userInfo.is_new)) {
+        setLoginState(LoginStateEnum.ATHENTICATOR)
+      } else {
+        router.push(EnumPath.HOME)
+      }
     },
 
     logout() {
       this.setToken(undefined)
       this.setUserInfo(null)
-
+      localCache.removeCache(EnumCache.USER_INFO_KEY)
+      localCache.removeCache(EnumCache.TOKEN_KEY)
+      localCache.removeCache(EnumCache.ROLES_KEY)
       router.push(EnumPath.LOGIN)
     },
 
