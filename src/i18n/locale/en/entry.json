@@ -1,0 +1,22 @@
+{
+  "username": "Username",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "remember": "Remember Me",
+  "login": "Log In",
+  "forgot":"Forget password?",
+  "usePhone": "Login with phone",
+  "useCode":"Login with code ",
+  "register": "Register",
+  "useOtherLoginMethods": "Other login methods",
+  "usernameRequired": "Username is required",
+  "passwordRequired": "Password is required",
+  "phoneNumber": "Phone number",
+  "verificationCode": "Verification Code",
+  "passwordResetNotAvailable": "Password reset is not supported yet~",
+  "mobilePhoneLoginNotAvailable": "Mobile phone login is not currently supported～",
+  "registerNotAvailable": "Registering an account is not currently supported～",
+  "qrLogin": "After scanning the QR code, click \"Confirm\" to complete the login.",
+  "getVerification":"Get Verification Code",
+  "resendAfter":"Resend after {time} seconds"
+}

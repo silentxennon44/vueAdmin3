@@ -9,29 +9,29 @@
       class="enter-x"
       name="username"
     >
-      <a-input v-model:value="formData.username" placeholder="账号" size="large" />
+      <a-input v-model:value="formData.username" :placeholder="t('entry.username')" size="large" />
     </a-form-item>
 
     <a-form-item
       class="enter-x"
       name="mobile"
     >
-      <a-input v-model:value="formData.mobile" placeholder="手机号" size="large" />
+      <a-input v-model:value="formData.mobile" :placeholder="t('entry.phoneNumber')" size="large" />
     </a-form-item>
 
     <a-form-item class="enter-x">
-      <CountdownInput v-model:value="formData.sms" size="large" placeholder="短信验证码" />
+      <CountdownInput v-model:value="formData.sms" size="large" :placeholder="t('entry.verificationCode')" />
     </a-form-item>
 
     <a-form-item class="enter-x">
       <a-button size="large" type="primary" block :loading="loading" @click="handleReset">
-        重置
+        {{ t('common.reset') }}
       </a-button>
     </a-form-item>
 
     <a-form-item class="enter-x">
       <a-button size="large" block @click="handleBackLogin">
-        返回
+        {{ t('common.return') }}
       </a-button>
     </a-form-item>
   </a-form>
@@ -45,6 +45,8 @@ import { message } from 'ant-design-vue'
 
 import { LoginStateEnum, useLoginState } from '../useLogin'
 import { CountdownInput } from '~/components/Countdown'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 interface FormState {
   username: string
@@ -66,6 +68,6 @@ const formData = reactive<FormState>({
 })
 
 const handleReset = async() => {
-  message.warning('暂不支持重置密码～')
+  message.warning(t('entry.passwordResetNotAvailable'))
 }
 </script>

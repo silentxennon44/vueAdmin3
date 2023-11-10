@@ -1,14 +1,10 @@
-<template>
-  <a-button :disabled="isStart" :loading="loading" @click="handleStart">
-    {{ getButtonText }}
-  </a-button>
-</template>
-
 <script setup lang="ts">
 import type { PropType } from 'vue'
 
 import { useCountdown } from './useCountdown'
 import { isFunction } from '~/utils/is'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   count: { type: Number, default: 60 },
@@ -22,7 +18,7 @@ const loading = ref(false)
 
 const { currentCount, isStart, start } = useCountdown(props.count)
 
-const getButtonText = computed(() => !unref(isStart) ? '获取验证码' : `${unref(currentCount)}秒后重新获取`)
+const getButtonText = computed(() => !unref(isStart) ? t('entry.getVerification'): t('entry.resendAfter', { time: unref(currentCount)}))
 
 async function handleStart() {
   const { beforeStartFunc } = props
@@ -41,3 +37,9 @@ async function handleStart() {
   }
 }
 </script>
+
+<template>
+  <a-button :disabled="isStart" :loading="loading" @click="handleStart">
+    {{ getButtonText }}
+  </a-button>
+</template>

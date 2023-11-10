@@ -1,6 +1,9 @@
+import { fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
 import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Unocss from 'unocss/vite'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import setupIcons from './icons'
 import setupAutoImport from './auto-import'
 import setupVueComponents from './vue-components'
@@ -11,7 +14,11 @@ export default function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
 
   const vitePlugins: (PluginOption | PluginOption[])[] = [
     vue(),
-    Unocss()
+    Unocss(),
+    VueI18nPlugin({
+      runtimeOnly: false, // <--- add this
+      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**') // provide a path to the folder where you'll store translation data
+    })
   ]
 
   // unplugin-auto-import

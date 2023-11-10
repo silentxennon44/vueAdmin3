@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { router } from '~/router'
 import { EnumCache, EnumPath } from '~/enums'
 import localCache from '~/utils/cache'
-import { loginRequest, getUserInfo, getMenuList } from '~/api/user'
+import { getMenuList, getUserInfo, loginRequest } from '~/api/user'
 import { isArray } from '~/utils/is'
 import { mapMenuToRoutes } from '~/utils/map-menu'
 
@@ -83,7 +83,8 @@ export const useUserStore = defineStore('user', {
     },
 
     async afterLoginAction() {
-      if (!this.getToken) return null
+      if (!this.getToken)
+        return null
 
       // get user info
       await this.getUserInfoAction()
@@ -102,7 +103,8 @@ export const useUserStore = defineStore('user', {
     },
 
     async getUserInfoAction(): Promise<UserInfo | null> {
-      if (!this.getToken) return null
+      if (!this.getToken)
+        return null
 
       const userInfo = await getUserInfo()
       const { roles = [] } = userInfo
@@ -119,7 +121,8 @@ export const useUserStore = defineStore('user', {
     },
 
     async getMenuListAction(): Promise<any> {
-      if (!this.getToken) return null
+      if (!this.getToken)
+        return null
 
       const menuList = await getMenuList()
 

@@ -1,6 +1,20 @@
+<script lang="ts" setup>
+import { LoginStateEnum, useLoginState } from '../useLogin'
+
+import qrCodeUrl from '~/assets/images/qrcode.png'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
+// import { Qrcode } from '~/components/Qrcode'
+
+const { handleBackLogin, getLoginState } = useLoginState()
+
+const getShow = computed(() => unref(getLoginState) === LoginStateEnum.QR_CODE)
+</script>
+
 <template>
   <template v-if="getShow">
-    <div>
+    <div style="display: flex; flex-direction: column; justify-content: center;">
       <!-- <Qrcode
         :value="qrCodeUrl"
         class="enter-x flex justify-center"
@@ -10,23 +24,12 @@
       <img class="enter-x" :src="qrCodeUrl" alt="">
 
       <a-divider class="enter-x">
-        扫码后点击"确认"，即可完成登录
+       {{ t('entry.qrLogin') }}
       </a-divider>
 
       <a-button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
-        返回
+        {{ t('common.return') }}
       </a-button>
     </div>
   </template>
 </template>
-<script lang="ts" setup>
-import { useLoginState, LoginStateEnum } from '../useLogin'
-
-import qrCodeUrl from '~/assets/images/qrcode.png'
-
-// import { Qrcode } from '~/components/Qrcode'
-
-const { handleBackLogin, getLoginState } = useLoginState()
-
-const getShow = computed(() => unref(getLoginState) === LoginStateEnum.QR_CODE)
-</script>

@@ -1,0 +1,8 @@
+{
+  "locales": ["en", "fr", "es"],  // Specify the list of locales or leave it empty to auto-discover
+  "fallback": "en",                // Specify the fallback locale
+  "srcPath": "./src",              // Path to your source files
+  "jsonSrcPath": "./src/locales",  // Path to your JSON localization files
+  "extensions": [".js", ".vue", ".json"],
+  "enabledFrameworks": ["vue"]
+}

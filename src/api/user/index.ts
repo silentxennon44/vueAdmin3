@@ -10,15 +10,18 @@ enum API {
 
 export function loginRequest(account: Account) {
   return request.post<LoginInfo>({
-    url: API.Login,
-    data: account
+    url: import.meta.env.VITE_API + API.Login,
+    data: account,
+    headers: {
+      Action: 'manage_user'
+    }
   })
 }
 
 export function getUserInfo() {
-  return request.get({ url: API.UserInfo })
+  return request.get({ url: import.meta.env.VITE_API + API.UserInfo })
 }
 
 export function getMenuList() {
-  return request.get({ url: API.MenuList })
+  return request.get({ url: import.meta.env.VITE_API + API.MenuList })
 }

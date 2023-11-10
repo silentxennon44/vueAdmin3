@@ -1,0 +1,22 @@
+{
+  "username": "账号",
+  "login": "登录",
+  "password": "密码",
+  "confirmPassword": "确认密码",
+  "remember": "记住账号",
+  "forgot" : "忘记密码?",
+  "usePhone": "手机登录",
+  "useCode":"二维码登录 ",
+  "register":"注册",
+  "useOtherLoginMethods": "其他登录方式",
+  "usernameRequired": "必须输入用户名",
+  "passwordRequired": "必须输入密码",
+  "phoneNumber": "手机号",
+  "verificationCode": "短信验证码",
+  "passwordResetNotAvailable": "暂不支持重置密码～",
+  "mobilePhoneLoginNotAvailable": "暂不支持手机登录～",
+  "registerNotAvailable": "暂不支持注册账号～",
+  "qrLogin": "扫码后点击\"确认\"，即可完成登录",
+  "getVerification":"获取验证码",
+  "resendAfter":"{time}秒后重新获取"
+}
