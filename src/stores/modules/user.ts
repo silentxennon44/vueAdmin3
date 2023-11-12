@@ -74,11 +74,14 @@ export const useUserStore = defineStore('user', {
     async loginAction(account: { username: string; password: string }) {
       try {
         const result = await loginRequest(account)
-        const { token } = result
+       if (result?.token) {
+          const { token } = result
 
-        // save token
-        this.setToken(token)
-        this.afterLoginAction()
+          // save token
+          this.setToken(token)
+          this.afterLoginAction()
+       } else {
+       }
       }
       catch (error) {
         return Promise.reject(error)

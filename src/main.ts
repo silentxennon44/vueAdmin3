@@ -1,9 +1,10 @@
-import { createApp, prototype } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 
 import '@unocss/reset/tailwind.css'
 import '~/styles/index.less'
-import 'uno.css'
+import 'uno.css';
+import '~/styles/reset.css'
 
 import { setupStore } from '~/stores'
 import { setupRouter } from '~/router'

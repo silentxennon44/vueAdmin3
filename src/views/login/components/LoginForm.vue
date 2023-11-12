@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
-
+import { supabase } from '~/supabase'
 import {
   AlipayCircleFilled,
   GithubFilled,
@@ -17,9 +17,14 @@ const { t } = useI18n()
 interface FormState {
   username: string
   password: string,
-  authenticator?: string
+  otp?: string
 }
 
+
+let { data: users, error } = await supabase
+  .from('users')
+  .select('*')
+console.log(users)
 const { setLoginState, getLoginState } = useLoginState()
 
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
@@ -41,7 +46,7 @@ const remember = ref(true)
 const formData = reactive<FormState>({
   username: '',
   password: '',
-  authenticator:''
+  otp: ''
 })
 
 const user = useUserStore()
@@ -55,44 +60,17 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <a-form
-    v-show="getShow"
-    ref="formRef"
-    :model="formData"
-    :rules="formRules"
-    @keypress.enter="handleLogin"
-  >
-    <a-form-item
-      class="enter-x"
-      name="username"
-    >
-      <a-input
-        v-model:value="formData.username"
-        :placeholder= "t('entry.username')"
-        size="large"
-      />
+  <a-form v-show="getShow" ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleLogin">
+  <a-form-item class="enter-x" name="username">
+    <a-input v-model:value="formData.username" :placeholder="t('entry.username')" size="large" />
+  </a-form-item>
+
+    <a-form-item class="enter-x" name="password">
+      <a-input-password v-model:value="formData.password" :placeholder="t('entry.password')" size="large" />
     </a-form-item>
 
-    <a-form-item
-      class="enter-x"
-      name="password"
-    >
-      <a-input-password
-        v-model:value="formData.password"
-        :placeholder= "t('entry.password')"
-        size="large"
-      />
-    </a-form-item>
-
-    <a-form-item
-      class="enter-x"
-      name="authenticator"
-    >
-      <a-input
-        v-model:value="formData.authenticator"
-        :placeholder= "t('entry.otp')"
-        size="large"
-      />
+    <a-form-item class="enter-x" name="otp">
+      <a-input v-model:value="formData.otp" :placeholder="t('entry.otp')" size="large" />
     </a-form-item>
 
     <a-row class="enter-x">
@@ -114,38 +92,38 @@ const handleLogin = async () => {
 
     <a-form-item class="enter-x">
       <a-button size="large" type="primary" block :loading="loading" @click="handleLogin">
-        {{ t('entry.login')}}
+        {{ t('entry.login') }}
       </a-button>
     </a-form-item>
 
     <!-- <a-row class="enter-x" justify="space-around">
-      <a-col :span="7">
-        <a-button block @click="setLoginState(LoginStateEnum.MOBILE)">
-         {{ t('entry.usePhone')}}
-        </a-button>
-      </a-col>
-      <a-col :span="7">
-        <a-button block @click="setLoginState(LoginStateEnum.QR_CODE)">
-          {{ t('entry.useCode')}}
-        </a-button>
-      </a-col>
-      <a-col :span="7">
-        <a-button block @click="setLoginState(LoginStateEnum.REGISTER)">
-         {{ t('entry.register')}}
-        </a-button>
-      </a-col>
-    </a-row> -->
+                                    <a-col :span="7">
+                                      <a-button block @click="setLoginState(LoginStateEnum.MOBILE)">
+                                       {{ t('entry.usePhone')}}
+                                      </a-button>
+                                    </a-col>
+                                    <a-col :span="7">
+                                      <a-button block @click="setLoginState(LoginStateEnum.QR_CODE)">
+                                        {{ t('entry.useCode')}}
+                                      </a-button>
+                                    </a-col>
+                                    <a-col :span="7">
+                                      <a-button block @click="setLoginState(LoginStateEnum.REGISTER)">
+                                       {{ t('entry.register')}}
+                                      </a-button>
+                                    </a-col>
+                                  </a-row> -->
 
     <!-- <a-divider class="enter-x">
-      {{ t('entry.useOtherLoginMethods')}}
-    </a-divider> -->
+                                    {{ t('entry.useOtherLoginMethods')}}
+                                  </a-divider> -->
 
     <!-- <div class="flex justify-evenly enter-x sign-in-way">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
-    </div> -->
+                                    <GithubFilled />
+                                    <WechatFilled />
+                                    <AlipayCircleFilled />
+                                    <GoogleCircleFilled />
+                                    <TwitterCircleFilled />
+                                  </div> -->
   </a-form>
 </template>
