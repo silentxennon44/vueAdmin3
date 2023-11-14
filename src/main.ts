@@ -4,8 +4,9 @@ import App from './App.vue'
 import '@unocss/reset/tailwind.css'
 import '~/styles/index.less'
 import 'uno.css';
-// import '~/styles/reset.css'
 import '~/styles/antdCustom.scss'
+import '@unocss/reset/eric-meyer.css'
+
 
 import { setupStore } from '~/stores'
 import { setupRouter } from '~/router'

@@ -24,5 +24,9 @@
   "resendAfter":"Resend after {time} seconds",
   "qrUsername":"Username is required before generating QR code",
   "generateQR":"Generate Google Authenticator QR Code",
-  "googleOTP":"Google Authenticator Code (TOTP)"
+  "googleOTP":"Google Authenticator Code (TOTP)",
+  "continueRegister":"Continue with Registration",
+  "registerContinueModalContent":"Have you scanned the QR code and bind it to your Google Authenticator?",
+  "registerSuccess":"Registration Succesful!",
+  "registerFailed":"Registration Failed!"
 }

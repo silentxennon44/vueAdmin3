@@ -10,7 +10,7 @@ import { message } from 'ant-design-vue';
 import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
 import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
-
+import { authenticator } from 'otplib';
 import { postSupabaseData, supaCheckIfAccountExist, checkIfValidGoogleAuthenticatorCode, getSecret } from '~/supabase/login'
 
 const { setLoginState, getLoginState } = useLoginState()
@@ -81,8 +81,9 @@ export const useUserStore = defineStore('user', {
           return message.error('Invalid Username or Password', 2)
 
       this.setUserInfo(data)
-      const secret = data[0].google_secret
       setLoginState(LoginStateEnum.ATHENTICATOR)
+
+      // const isValid = authenticator.check(token, secret);
 
       // if (!account.otp) {
       //   const data = await supaCheckIfAccountExist(account.username, account.password)
@@ -129,7 +130,14 @@ export const useUserStore = defineStore('user', {
     },
 
     async authenticateAction(data : { otp: string}) {
-      console.log(data)
+      const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
+      // const isValid = authenticator.check(data.otp, google_secret)
+      // if (!isValid) return message.error('Invalid Code')
+      message.info('Login Success. Welcome!')
+      const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+      localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
+      this.afterLoginAction()
+      setLoginState(LoginStateEnum.LOGIN)
     },
 
     async afterLoginAction() {

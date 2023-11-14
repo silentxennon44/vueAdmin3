@@ -8,4 +8,5 @@ export interface UserInfo {
   homePath?: string
   roles: any
   qr?: string
+  google_secret?: string
 }

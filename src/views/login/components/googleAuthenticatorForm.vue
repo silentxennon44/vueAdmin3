@@ -6,16 +6,27 @@
           <span>{{ t('common.enter') }} {{ t('entry.googleOTP') }}</span>
         </a-form-item>
 
-        <a-form-item class="enter-x">
+        <a-form-item class="enter-x" name="otp">
           <a-input v-model:value="formData.otp" :placeholder="t('entry.googleOTP')" size="large" autocomplete="off"
             autofill="off" />
         </a-form-item>
 
-        <a-form-item class="enter-x">
-          <a-button size="large" block @click="handleBackLogin">
-            {{ t('common.return') }}
-          </a-button>
-        </a-form-item>
+        <a-row class="enter-x" justify="space-between">
+          <a-col :span="12" style="display: flex; justify-content: center; align-items: center;">
+            <a-form-item class="enter-x rowQr">
+              <a-button size="large" @click="handleBackLogin">
+                {{ t('common.return') }}
+              </a-button>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12" style="display: flex; justify-content: center; align-items: center;">
+            <a-form-item class="enter-x rowQr">
+              <a-button size="large" @click="handleAuthenticate" type="primary">
+                {{ t('common.confirm') }}
+              </a-button>
+            </a-form-item>
+          </a-col>
+        </a-row>
       </a-form>
     </div>
   </template>

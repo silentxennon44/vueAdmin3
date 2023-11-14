@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import type { FormInstance } from 'ant-design-vue'
 import { Modal, message } from 'ant-design-vue'
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import { ConsoleSqlOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import 'ant-design-vue/lib/message/style/index.css'
 import 'ant-design-vue/lib/modal/style/index.css'
 
 import { LoginStateEnum, useLoginState } from '../useLogin'
 import { StrengthMeter } from '~/components/StrengthMeter'
-import { useI18n } from 'vue-i18n'
 import { createVNode } from 'vue';
-import axios from 'axios'
+import { generateQRcode, postSupabaseData } from '~/supabase/login'
+import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 interface FormState {
   username: string
   password: string
   confirmPassword: string
+  google_secret: string
 }
 
 const { handleBackLogin, getLoginState } = useLoginState()
@@ -24,11 +25,13 @@ const getShow = computed(() => unref(getLoginState) === LoginStateEnum.REGISTER)
 
 const formRef = ref<FormInstance>()
 const loading = ref(false)
+const ok = ref(false)
 
 const formData = reactive<FormState>({
   username: '',
   password: '',
   confirmPassword: '',
+  google_secret: '',
 })
 
 const handleRegister = async () => {
@@ -40,11 +43,19 @@ const handleRegister = async () => {
   if (data.password !== data.confirmPassword) return message.error('Passwords are not the same!')
 
   Modal.confirm({
-    title: 'Continue with Registration',
+    title: t('entry.continueRegister'),
     icon: createVNode(ExclamationCircleOutlined),
-    content: 'Have you scanned the QR code and bind it to your Google Authenticator?',
-    okText: 'Confirm',
-    cancelText: 'Return',
+    content: t('entry.registerContinueModalContent'),
+    okText: t('common.confirm'),
+    cancelText: t('common.return'),
+    onOk() {
+      ok.value = true
+      postSupabaseData('users', formData).then(({ error, mess }) => {
+        if (error) return message.error(t('entry.registerFailed'))
+        message.success(t('entry.registerSuccess'))
+        handleBackLogin()
+      })
+    }
   });
 }
 
@@ -68,10 +79,12 @@ const handleGenerateQR = async () => {
   if (!formData.username) return message.error(t('entry.qrUsername'))
   isQrBtnAbled.value = true
   imgLoading.value = true
-  const img = await axios.get('https://api.waifu.pics/sfw/glomp')
-  qrCode.value = img.data.url
+
+  const code = await generateQRcode(formData.username)
+  qrCode.value = code.imgLink
   imgLoading.value = false
   message.info(t('common.imagePreview'), 2)
+  formData.google_secret = code.secret
 }
 watch(getShow, (isShown) => {
   if (!isShown) {

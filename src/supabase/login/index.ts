@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { supabase } from '../'
-// import { authenticator } from 'otplib';
+import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
-
 import * as speakeasy from 'speakeasy';
+import i18n from '~/i18n';
+const { t } = i18n.global
 
 export const supaCheckIfAccountExist = async (username='', password='') => {
   let { data: user, error } = await supabase
@@ -46,18 +47,7 @@ function generateOTP(secret: string, timestamp = null) {
   return otp;
 }
 
-export const postSupabaseData = async (table='', params: { username: string; password: string }) => {
-  const secret = speakeasy.generateSecret({
-    name: 'Scratch Game BE: '+ params.username,
-    length: 20,
-  })
-
-    console.log(secret, secret.otpauth_url)
-
-    sessionStorage.setItem('newQr', await QRCode.toDataURL(secret.otpauth_url as string))
-
-  const qr = await QRCode.toDataURL(secret.otpauth_url as string);
-
+export const postSupabaseData = async (table='', params: { username: string; password: string, google_secret: string }) => {
   const { error } = await supabase
     .from(table)
     .insert([
@@ -67,15 +57,14 @@ export const postSupabaseData = async (table='', params: { username: string; pas
         user_level: 'user',
         status: 'active',
         is_new: true,
-        google_secret: secret.base32,
+        google_secret: params.google_secret,
       },
     ])
     .select()
 
   return {
     error: error!==null,
-    message: error!==null? "Registration Failed!" : "Registration Succesful!",
-    qrCode: error!==null? "" : qr
+    mess: error!==null? t('entry.registerFailed') : t('entry.registerSuccess'),
   }
   // return {
   //   error: false,
@@ -90,4 +79,22 @@ export const checkIfValidGoogleAuthenticatorCode = (secret:string, otp:string) =
   return false
 }
   return true
+}
+
+
+export const generateQRcode = async (username='') => {
+  const secret = authenticator.generateSecret();
+  const otp = authenticator.keyuri(username, "Scratch Card APP (Back End)", secret);
+  let imgLink=''
+  QRCode.toDataURL(otp, (err, imageUrl) => {
+      if (err) {
+          console.log('Could not generate QR code', err);
+          return;
+      }
+      imgLink = imageUrl;
+  });
+  return {
+    secret,
+    imgLink
+  }
 }

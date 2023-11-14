@@ -24,5 +24,9 @@
   "resendAfter":"{time}秒后重新获取",
   "qrUsername":"生成二维码之前需要输入用户名",
   "generateQR":"生成谷歌身份验证器二维码",
-  "googleOTP":"Google 身份验证器代码 (TOTP)"
+  "googleOTP":"Google 身份验证器代码 (TOTP)",
+  "continueRegister":"继续注册",
+  "registerContinueModalContent":"你是否已经扫描了二维码并将其绑定到你的谷歌身份验证器？",
+  "registerSuccess": "注册成功！",
+  "registerFailed": "注册失败！"
 }

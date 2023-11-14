@@ -3,5 +3,6 @@
   "return": "Return",
   "qrCodeMessage": "Once you scanned the QR code, click the return button.",
   "enter":"Enter",
-  "imagePreview":"Click on image to enlarge."
+  "imagePreview":"Click on image to enlarge.",
+  "confirm":"Confirm"
 }

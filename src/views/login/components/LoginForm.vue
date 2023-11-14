@@ -9,7 +9,6 @@ const { t } = useI18n()
 interface FormState {
   username: string
   password: string,
-  otp?: string
 }
 
 const { setLoginState, getLoginState } = useLoginState()
@@ -32,7 +31,6 @@ const remember = ref(true)
 const formData = reactive<FormState>({
   username: '',
   password: '',
-  otp: ''
 })
 
 const user = useUserStore()
@@ -72,12 +70,12 @@ watch(getShow, (isShown) => {
         </a-form-item>
       </a-col>
       <!-- <a-col :span="12">
-            <a-form-item :style="{ 'text-align': 'right' }" class="enter-x">
-              <a-button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
-                {{ t('entry.forgot') }}
-              </a-button>
-            </a-form-item>
-          </a-col> -->
+              <a-form-item :style="{ 'text-align': 'right' }" class="enter-x">
+                <a-button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
+                  {{ t('entry.forgot') }}
+                </a-button>
+              </a-form-item>
+            </a-col> -->
     </a-row>
 
     <a-form-item class="enter-x">

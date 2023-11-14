@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import LoginForm from './components/LoginForm.vue'
-import ForgetPasswordForm from './components/ForgetPasswordForm.vue'
-import MobileForm from './components/MobileForm.vue'
-import QrCodeForm from './components/QrCodeForm.vue'
+// import ForgetPasswordForm from './components/ForgetPasswordForm.vue'
+// import MobileForm from './components/MobileForm.vue'
+// import QrCodeForm from './components/QrCodeForm.vue'
 import AuthenticateForm from './components/googleAuthenticatorForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 import Plum from '~/components/Plum.vue'
@@ -21,7 +21,7 @@ import Plum from '~/components/Plum.vue'
 
     <div class="w-475px">
       <login-form />
-      <forget-password-form />
+      <!-- <forget-password-form /> -->
       <authenticate-form />
       <!-- <mobile-form /> -->
       <!-- <qr-code-form /> -->
