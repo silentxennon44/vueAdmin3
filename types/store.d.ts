@@ -7,5 +7,5 @@ export interface UserInfo {
   desc?: string
   homePath?: string
   roles: any
-  secret?: string
+  qr?: string
 }

@@ -12,15 +12,11 @@ export function loginRequest(account: Account) {
   return request.post<LoginInfo>({
     url: import.meta.env.VITE_API + API.Login,
     data: account,
-    headers: {
-      Action: 'manage_user'
-    }
   })
 }
 
 export function getUserInfo() {
-  return request.post({ url: import.meta.env.VITE_API + API.UserInfo, headers: { Action: 'manage_user'}, data: { username: 'admine', password: 'adminb'}})
-  // return request.get({ url: import.meta.env.VITE_API + API.UserInfo, headers: { Action: 'manage_user'} })
+  return request.get({ url: import.meta.env.VITE_API + API.UserInfo })
 }
 
 export function getMenuList() {

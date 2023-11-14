@@ -5,10 +5,13 @@ import localCache from '~/utils/cache'
 import { getMenuList, getUserInfo, loginRequest } from '~/api/user'
 import { isArray } from '~/utils/is'
 import { mapMenuToRoutes } from '~/utils/map-menu'
+import { message } from 'ant-design-vue';
 
 import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
 import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
+
+import { postSupabaseData, supaCheckIfAccountExist, checkIfValidGoogleAuthenticatorCode, getSecret } from '~/supabase/login'
 
 const { setLoginState, getLoginState } = useLoginState()
 
@@ -71,43 +74,81 @@ export const useUserStore = defineStore('user', {
       })
     },
 
-    async loginAction(account: { username: string; password: string }) {
-      try {
-        const result = await loginRequest(account)
-       if (result?.token) {
-          const { token } = result
+    async loginAction(account: { username: string; password: string}) {
 
-          // save token
-          this.setToken(token)
-          this.afterLoginAction()
-       } else {
-       }
-      }
-      catch (error) {
-        return Promise.reject(error)
-      }
+      const data = await supaCheckIfAccountExist(account.username, account.password)
+      if (!data || !!!data.length)
+          return message.error('Invalid Username or Password', 2)
+
+      this.setUserInfo(data)
+      const secret = data[0].google_secret
+      setLoginState(LoginStateEnum.ATHENTICATOR)
+
+      // if (!account.otp) {
+      //   const data = await supaCheckIfAccountExist(account.username, account.password)
+      //   if (data && data.length)
+      //     return message.error('OTP is required for registered users!', 2)
+
+      //   const newUsersData = await postSupabaseData('users', account);
+
+      //   if (newUsersData.error) return message.error(newUsersData.message)
+
+      //   message.success(newUsersData.message)
+      //   console.log(newUsersData)
+
+      //   setLoginState(LoginStateEnum.ATHENTICATOR)
+
+      // } else {
+      //   // const user = await supaCheckIfAccountExist(account.username, account.password)
+      //   // if (user && user.length && user[0].password !== account.password)
+      //   //   return message.error('Incorrect Password!', 2)
+      //   try {
+      //     // const result = await loginRequest(account)
+      //     const result = await supaLoginRequest('users', account)
+
+      //     if (result && result.length === 0)
+      //       return message.error('Incorrect Username or Password!', 2)
+
+      //     if (checkIfValidGoogleAuthenticatorCode(result[0].google_secret, account.otp)) {
+      //       this.setToken('token')
+      //       this.afterLoginAction()
+      //     }
+      //     // if (result?.token) {
+      //     //     const { token } = result
+
+      //     //     // save token
+      //     //     this.setToken(token)
+      //     //     this.afterLoginAction()
+      //     // } else {
+      //     // }
+      //   }
+      //   catch (error) {
+      //     return Promise.reject(error)
+      //   }
+      // }
     },
 
-    async authenticateAction(account: { username: string; password: string, code:string }) {
-      console.log(account)
+    async authenticateAction(data : { otp: string}) {
+      console.log(data)
     },
 
     async afterLoginAction() {
-      if (!this.getToken)
-        return null
+      // if (!this.getToken)
+      //   return null
 
       // get user info
-      await this.getUserInfoAction()
+      // await this.getUserInfoAction()
 
       // get menu list
       // await this.getMenuListAction()
-      const userInfo = await getUserInfo()
+      // const userInfo = await getUserInfo()
+      router.push(EnumPath.HOME)
 
-      if (userInfo.is_new && Boolean(userInfo.is_new)) {
-        setLoginState(LoginStateEnum.ATHENTICATOR)
-      } else {
-        router.push(EnumPath.HOME)
-      }
+      // if (userInfo.is_new && Boolean(userInfo.is_new)) {
+      //   setLoginState(LoginStateEnum.ATHENTICATOR)
+      // } else {
+      //   router.push(EnumPath.HOME)
+      // }
     },
 
     logout() {

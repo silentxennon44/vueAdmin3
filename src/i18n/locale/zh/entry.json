@@ -13,6 +13,7 @@
   "usernameRequired": "必须输入用户名",
   "passwordRequired": "必须输入密码",
   "otpRequired": "必须输入验证器",
+  "confirmPasswordRequired": "必须输入确认密码",
   "phoneNumber": "手机号",
   "verificationCode": "短信验证码",
   "passwordResetNotAvailable": "暂不支持重置密码～",
@@ -20,5 +21,8 @@
   "registerNotAvailable": "暂不支持注册账号～",
   "qrLogin": "扫码后点击\"确认\"，即可完成登录",
   "getVerification":"获取验证码",
-  "resendAfter":"{time}秒后重新获取"
+  "resendAfter":"{time}秒后重新获取",
+  "qrUsername":"生成二维码之前需要输入用户名",
+  "generateQR":"生成谷歌身份验证器二维码",
+  "googleOTP":"Google 身份验证器代码 (TOTP)"
 }

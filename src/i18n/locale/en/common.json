@@ -1,5 +1,6 @@
 {
   "reset": "Reset",
   "return": "Return",
-  "qrCodeMessage": "Once you scanned the QR code, click the return button"
+  "qrCodeMessage": "Once you scanned the QR code, click the return button",
+  "enter":"Enter"
 }

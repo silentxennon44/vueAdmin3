@@ -42,7 +42,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         {
           find: /#\//,
           replacement: `${pathResolve('types')}/`
-        }
+        },
+        // {
+        //   find: 'crypto',
+        //   replacement: './node_modules/sockjs-client/lib/utils/browser-crypto.js',
+        // },
       ]
     },
 

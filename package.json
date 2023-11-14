@@ -20,6 +20,7 @@
     "@ant-design/icons-vue": "6.1.0",
     "@intlify/unplugin-vue-i18n": "^1.5.0",
     "@supabase/supabase-js": "^2.38.4",
+    "@types/speakeasy": "^2.0.10",
     "@unocss/reset": "0.44.1",
     "@vueuse/core": "8.9.2",
     "@wangeditor/editor": "5.1.7",
@@ -32,6 +33,7 @@
     "dayjs": "1.11.3",
     "lodash-es": "4.17.21",
     "nprogress": "0.2.0",
+    "otplib": "^12.0.1",
     "pinia": "2.0.16",
     "qrcode": "1.5.1",
     "sass": "^1.69.5",
@@ -71,6 +73,7 @@
     "unplugin-vue-components": "0.21.1",
     "vite": "3.0.0",
     "vite-plugin-mock": "2.9.6",
+    "vite-plugin-node-polyfills": "^0.16.0",
     "vue-tsc": "0.38.5"
   },
   "config": {

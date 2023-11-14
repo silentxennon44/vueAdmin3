@@ -4,13 +4,18 @@ import ForgetPasswordForm from './components/ForgetPasswordForm.vue'
 import MobileForm from './components/MobileForm.vue'
 import QrCodeForm from './components/QrCodeForm.vue'
 import AuthenticateForm from './components/googleAuthenticatorForm.vue'
-// import RegisterForm from './components/RegisterForm.vue'
+import RegisterForm from './components/RegisterForm.vue'
 import Plum from '~/components/Plum.vue'
 
 
 </script>
 
 <template>
+  <form action="" class="autocompleteForm">
+    <input type="text" name="username" id="autoUsername">
+    <input type="text" name="password" id="autoPassword">
+    <input type="submit" value="">
+  </form>
   <div class="login">
     <plum />
 
@@ -20,14 +25,14 @@ import Plum from '~/components/Plum.vue'
       <authenticate-form />
       <!-- <mobile-form /> -->
       <!-- <qr-code-form /> -->
-      <!-- <register-form /> -->
+      <register-form />
     </div>
   </div>
 </template>
 
 <style lang="less">
 .login {
-  @apply  h-full flex justify-center items-center;
+  @apply h-full flex justify-center items-center;
 
   .ant-divider-inner-text {
     font-size: 12px;
@@ -47,5 +52,10 @@ import Plum from '~/components/Plum.vue'
       }
     }
   }
+}
+
+.autocompleteForm {
+  position: absolute;
+  top: -99999999px;
 }
 </style>

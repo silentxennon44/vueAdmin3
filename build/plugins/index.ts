@@ -8,6 +8,7 @@ import setupIcons from './icons'
 import setupAutoImport from './auto-import'
 import setupVueComponents from './vue-components'
 import setupMockServer from './mock'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const { VITE_USE_MOCK } = viteEnv
@@ -18,6 +19,9 @@ export default function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     VueI18nPlugin({
       runtimeOnly: false, // <--- add this
       include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**') // provide a path to the folder where you'll store translation data
+    }),
+    nodePolyfills({
+      include: ['crypto', 'stream']
     })
   ]
 

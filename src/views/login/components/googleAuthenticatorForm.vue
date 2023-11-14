@@ -3,11 +3,12 @@
     <div style="display: flex; flex-direction: column; justify-content: center;" id="authenticator">
       <a-form v-if="getShow" ref="formRef" :model="formData" @keypress.enter="handleAuthenticate">
         <a-form-item class="enter-x" :class="styles.antFormItem">
-          <span>{{ t('common.qrCodeMessage') }}</span>
+          <span>{{ t('common.enter') }} {{ t('entry.googleOTP') }}</span>
         </a-form-item>
 
-        <a-form-item class="enter-x" :class="styles.antFormItem">
-          <img :src="qrcodelink" draggable="false" alt="qrcode" :class="styles.qrCode" />
+        <a-form-item class="enter-x">
+          <a-input v-model:value="formData.otp" :placeholder="t('entry.googleOTP')" size="large" autocomplete="off"
+            autofill="off" />
         </a-form-item>
 
         <a-form-item class="enter-x">
@@ -31,17 +32,12 @@ const getShow = computed(() => unref(getLoginState) === LoginStateEnum.ATHENTICA
 const { t } = useI18n()
 
 interface FormState {
-  username: string
-  password: string
-  code: string
-
+  otp: string
 }
 const formRef = ref<FormInstance>()
 
 const formData = reactive<FormState>({
-  username: '',
-  password: '',
-  code: ''
+  otp: '',
 })
 const user = useUserStore()
 
@@ -53,8 +49,11 @@ const handleAuthenticate = async () => {
   user.authenticateAction(data)
 }
 
-const qrcodelink = user.getUserInfo.secret
-
+watch(getShow, (isShown) => {
+  if (!isShown) {
+    Object.keys(formData).forEach(item => formData[item] = '')
+  }
+})
 </script>
 
 <style scoped module="styles" lang="scss">

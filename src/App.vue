@@ -1,24 +1,33 @@
 <template>
-  <router-view />
-  <div :class="styles.langPicker" @click.prevent="handleClick">
-    Language: {{ language }}
-  </div>
-  <div :class="styles.langList" v-if="isLangListShown">
-    <span @click="languageSelect(lang)" :class="styles.language" v-for="(_, lang, index) in translations" :key="language">
-      {{ localeList[lang] }}
-    </span>
-  </div>
+  <a-config-provider :locale="antdLaguage">
+    <router-view />
+    <div ref="languagePicker" v-if="!isLangListShown" :class="styles.langPicker" @click.prevent="handleClick">
+      Language: {{ language }}
+    </div>
+    <div ref="languageList" :class="styles.langList" v-if="isLangListShown">
+      <span @click="languageSelect(lang)" :class="styles.language" v-for="(_, lang, index) in translations"
+        :key="language">
+        {{ localeList[lang] }}
+      </span>
+    </div>
+  </a-config-provider>
 </template>
 
 <script setup lang="ts">
 import { translations, localeList } from '~/i18n'
 import { useI18n } from 'vue-i18n';
 import localCache from '~/utils/cache'
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import enUS from 'ant-design-vue/es/locale/en_US'
+import { Locale } from 'ant-design-vue/es/locale-provider';
 
 const currentLang = computed(() => locale.value) as unknown as keyof typeof translations
 const { locale } = useI18n();
 const language = ref(localeList[currentLang.value])
 const isLangListShown = ref(false)
+const languageList = ref<HTMLDivElement>()
+const languagePicker = ref<HTMLDivElement>()
+const antdLaguage = ref(enUS)
 
 const handleClick = () => {
   isLangListShown.value = !isLangListShown.value
@@ -30,12 +39,41 @@ const languageSelect = (lang: keyof typeof translations) => {
   language.value = localeList[lang]
   localCache.setCache("language", locale.value)
 }
+
+watch(currentLang, (item) => {
+  let lang: Locale
+  switch (item) {
+    case 'en':
+      lang = enUS
+      break;
+    case 'zh':
+      lang = zhCN
+      break;
+    default:
+      lang = enUS
+      break;
+  }
+  antdLaguage.value = lang
+  console.log(lang)
+})
+
+// const handleOutsideClick = (e: MouseEvent) => {
+//   console.log(e.target === languageList.value, e.target === languagePicker.value)
+// }
+
+// onMounted(() => {
+//   window.addEventListener("click", handleOutsideClick)
+// })
+
+// onUnmounted(() => {
+//   window.removeEventListener("click", handleOutsideClick)
+// })
 </script>
 
 <style lang="scss" module="styles" scoped>
 .langPicker {
   position: fixed;
-  z-index: 7;
+  z-index: 9;
   cursor: pointer;
   bottom: 10px;
   right: 10px;
@@ -50,7 +88,7 @@ const languageSelect = (lang: keyof typeof translations) => {
   border: 1px solid grey;
   width: 125px;
   position: fixed;
-  z-index: 7;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   padding: 2.5px;
@@ -65,7 +103,8 @@ const languageSelect = (lang: keyof typeof translations) => {
     overflow: hidden;
     text-overflow: ellipsis;
     border: 1px solid transparent;
-    transition: .1s border ease;
+    transition: .3s border ease;
+    cursor: pointer;
 
     &:hover {
       border: 1px solid rgb(47, 147, 214);
