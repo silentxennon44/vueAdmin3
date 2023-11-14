@@ -12,6 +12,7 @@ import type { UserInfo } from '#/store'
 import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
 import { authenticator } from 'otplib';
 import { postSupabaseData, supaCheckIfAccountExist, checkIfValidGoogleAuthenticatorCode, getSecret } from '~/supabase/login'
+import { toRaw } from 'vue';
 
 const { setLoginState, getLoginState } = useLoginState()
 
@@ -36,6 +37,7 @@ export const useUserStore = defineStore('user', {
     },
 
     getUserInfo(): UserInfo {
+      console.log(this.userInfo);
       return this.userInfo || localCache.getCache(EnumCache.USER_INFO_KEY) || {}
     },
 
@@ -80,7 +82,7 @@ export const useUserStore = defineStore('user', {
       if (!data || !!!data.length)
           return message.error('Invalid Username or Password', 2)
 
-      this.setUserInfo(data)
+      this.setUserInfo(data[0])
       setLoginState(LoginStateEnum.ATHENTICATOR)
 
       // const isValid = authenticator.check(token, secret);
@@ -130,12 +132,14 @@ export const useUserStore = defineStore('user', {
     },
 
     async authenticateAction(data : { otp: string}) {
-      const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
+      const { google_secret } = toRaw(this.userInfo)[0] ?? localCache.getCache(EnumCache.USER_INFO_KEY)[0]
+      // const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
       const isValid = authenticator.check(data.otp, google_secret)
       if (!isValid) return message.error('Invalid Code')
       message.info('Login Success. Welcome!')
-      const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-      localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
+      const genRanHex = (size: number) => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+      // localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
+      this.setToken(genRanHex(15))
       this.afterLoginAction()
       setLoginState(LoginStateEnum.LOGIN)
     },

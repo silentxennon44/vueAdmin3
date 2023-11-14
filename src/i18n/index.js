@@ -3,7 +3,7 @@ import English from './locale/en'
 import Chinese from './locale/zh'
 import localCache from '~/utils/cache'
 
-export * as antdlang from './antdSuppertedLanguages'
+// export * as antdlang from './antdSuppertedLanguages'
 
 export const translations = {
   en_US: English,

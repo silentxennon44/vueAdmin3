@@ -4,17 +4,13 @@
       <a-button type="primary" @click="setWatermark()">
         创建默认
       </a-button>
-      <a-button
-        type="primary"
-        danger
-        @click="
-          setWatermark({
-            str: 'vue-hbs-admin',
-            str2: 'watermark',
-            fillStyle: '#409EFF',
-          })
-        "
-      >
+      <a-button type="primary" danger @click="
+        setWatermark({
+          str: 'Scratch Game APP Backend',
+          str2: 'watermark',
+          fillStyle: '#409EFF',
+        })
+      ">
         创建自定义
       </a-button>
       <a-button @click="clear()">
@@ -32,6 +28,11 @@
 // hook 模式
 import { useWatermark } from '~/components/Watermark'
 import { PageWrapper } from '~/components/Page'
+import { useUserStore } from '~/stores';
+import { storeToRefs } from 'pinia';
+
+const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore)
 
 const { setWatermark, clear } = useWatermark()
 </script>

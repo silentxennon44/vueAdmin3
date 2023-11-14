@@ -15,36 +15,17 @@
         </a-space>
       </template>
       <div style="border: 1px solid #ccc">
-        <Toolbar
-          :editor="editorRef"
-          :default-config="toolbarConfig"
-          :mode="mode"
-          style="border-bottom: 1px solid #ccc"
-        />
-        <Editor
-          v-model="valueHtml"
-          :default-config="editorConfig"
-          :mode="mode"
-          style="height: 300px; overflow-y: hidden"
-          @on-created="handleCreated"
-          @on-change="handleChange"
-          @on-destroyed="handleDestroyed"
-          @on-focus="handleFocus"
-          @on-blur="handleBlur"
-          @custom-alert="customAlert"
-          @custom-paste="customPaste"
-        />
+        <Toolbar :editor="editorRef" :default-config="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
+        <Editor v-model="valueHtml" :default-config="editorConfig" :mode="mode" style="height: 300px; overflow-y: hidden"
+          @on-created="handleCreated" @on-change="handleChange" @on-destroyed="handleDestroyed" @on-focus="handleFocus"
+          @on-blur="handleBlur" @custom-alert="customAlert" @custom-paste="customPaste" />
       </div>
     </a-card>
     <a-card title="富文本显示器" class="enter-y !mt-16px">
       <div v-html="valueHtml" />
     </a-card>
     <a-card title="富文本 valueHtml" class="enter-y !mt-16px">
-      <textarea
-        v-model="valueHtml"
-        readonly
-        style="width: 100%; height: 200px; outline: none"
-      />
+      <textarea v-model="valueHtml" readonly style="width: 100%; height: 200px; outline: none" />
     </a-card>
   </page-wrapper>
 </template>
@@ -111,7 +92,7 @@ const customPaste = (editor, event, callback) => {
 const insertText = () => {
   const editor = editorRef.value
   if (editor === null) return
-  editor.insertText('vue-hbs-admin 富文本编辑器')
+  editor.insertText('Scratch Game APP Backend 富文本编辑器')
 }
 const printHtml = () => {
   const editor = editorRef.value

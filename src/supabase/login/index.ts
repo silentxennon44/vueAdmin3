@@ -4,6 +4,7 @@ import { authenticator } from 'otplib';
 import QRCode from 'qrcode';
 import * as speakeasy from 'speakeasy';
 import i18n from '~/i18n';
+import { UserInfo } from '#/store';
 const { t } = i18n.global
 
 export const supaCheckIfAccountExist = async (username='', password='') => {
@@ -12,7 +13,7 @@ export const supaCheckIfAccountExist = async (username='', password='') => {
   .select('*')
   .eq('username', username)
   .eq('password', password)
-  return user
+  return user as unknown as UserInfo[]
 }
 
 export const getAllDataFromTable = async (table='') => {
