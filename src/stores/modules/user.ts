@@ -131,8 +131,8 @@ export const useUserStore = defineStore('user', {
 
     async authenticateAction(data : { otp: string}) {
       const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
-      // const isValid = authenticator.check(data.otp, google_secret)
-      // if (!isValid) return message.error('Invalid Code')
+      const isValid = authenticator.check(data.otp, google_secret)
+      if (!isValid) return message.error('Invalid Code')
       message.info('Login Success. Welcome!')
       const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
       localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
