@@ -3,9 +3,11 @@ import English from './locale/en'
 import Chinese from './locale/zh'
 import localCache from '~/utils/cache'
 
+export * as antdlang from './antdSuppertedLanguages'
+
 export const translations = {
-  en: English,
-  zh: Chinese
+  en_US: English,
+  zh_CN: Chinese
 }
 
 export default createI18n({
@@ -101,6 +103,7 @@ export const localeList = {
     zh_Hant_HK: "Chinese (Traditional Han, Hong Kong SAR China)",
     zh_Hant_MO: "Chinese (Traditional Han, Macau SAR China)",
     zh_Hant_TW: "Chinese (Traditional Han, Taiwan)",
+    zh_CN: "Chinese",
     zh: "Chinese",
     kw_GB: "Cornish (United Kingdom)",
     kw: "Cornish",

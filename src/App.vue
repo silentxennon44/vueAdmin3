@@ -14,12 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import { translations, localeList } from '~/i18n'
+import { translations, localeList, antdlang } from '~/i18n'
 import { useI18n } from 'vue-i18n';
 import localCache from '~/utils/cache'
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import enUS from 'ant-design-vue/es/locale/en_US'
-import { Locale } from 'ant-design-vue/es/locale-provider';
+import zh_CN from 'ant-design-vue/es/locale/zh_CN';
+import en_US from 'ant-design-vue/es/locale/en_US'
 
 const currentLang = computed(() => locale.value) as unknown as keyof typeof translations
 const { locale } = useI18n();
@@ -27,7 +26,7 @@ const language = ref(localeList[currentLang.value])
 const isLangListShown = ref(false)
 const languageList = ref<HTMLDivElement>()
 const languagePicker = ref<HTMLDivElement>()
-const antdLaguage = ref(enUS)
+const antdLaguage = ref(en_US)
 
 const handleClick = () => {
   isLangListShown.value = !isLangListShown.value
@@ -41,20 +40,8 @@ const languageSelect = (lang: keyof typeof translations) => {
 }
 
 watch(currentLang, (item) => {
-  let lang: Locale
-  switch (item) {
-    case 'en':
-      lang = enUS
-      break;
-    case 'zh':
-      lang = zhCN
-      break;
-    default:
-      lang = enUS
-      break;
-  }
-  antdLaguage.value = lang
-  console.log(lang)
+  const languages = { en_US, zh_CN }
+  antdLaguage.value = languages[item]
 })
 
 // const handleOutsideClick = (e: MouseEvent) => {

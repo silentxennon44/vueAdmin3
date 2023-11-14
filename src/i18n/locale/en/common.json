@@ -1,6 +1,7 @@
 {
   "reset": "Reset",
   "return": "Return",
-  "qrCodeMessage": "Once you scanned the QR code, click the return button",
-  "enter":"Enter"
+  "qrCodeMessage": "Once you scanned the QR code, click the return button.",
+  "enter":"Enter",
+  "imagePreview":"Click on image to enlarge."
 }

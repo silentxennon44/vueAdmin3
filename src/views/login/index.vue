@@ -11,7 +11,7 @@ import Plum from '~/components/Plum.vue'
 </script>
 
 <template>
-  <form action="" class="autocompleteForm">
+  <form class="autocompleteForm" id="autocompleteForm">
     <input type="text" name="username" id="autoUsername">
     <input type="text" name="password" id="autoPassword">
     <input type="submit" value="">

@@ -1,7 +1,10 @@
-.ant-message-custom-content.ant-message-error{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.ant-message-custom-content{
+  &.ant-message-error,
+  &.ant-message-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .ant-back-top{

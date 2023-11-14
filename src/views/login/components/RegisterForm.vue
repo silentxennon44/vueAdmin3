@@ -68,9 +68,10 @@ const handleGenerateQR = async () => {
   if (!formData.username) return message.error(t('entry.qrUsername'))
   isQrBtnAbled.value = true
   imgLoading.value = true
-  const img = await axios.get('https://api.waifu.pics/sfw/waifu')
-
+  const img = await axios.get('https://api.waifu.pics/sfw/glomp')
   qrCode.value = img.data.url
+  imgLoading.value = false
+  message.info(t('common.imagePreview'), 2)
 }
 watch(getShow, (isShown) => {
   if (!isShown) {
@@ -80,18 +81,16 @@ watch(getShow, (isShown) => {
   qrCode.value = ''
 })
 
-watch(qrCode, (param) => {
-  if (param !== '')
-    imgLoading.value = false
-})
-
+const handleUsernameChange = () => {
+  isQrBtnAbled.value = false
+}
 </script>
 
 <template>
   <a-form v-if="getShow" ref="formRef" :model="formData" @keypress.enter="handleRegister" :rules="formRule">
     <a-form-item class="enter-x" name="username">
       <a-input v-model:value="formData.username" :placeholder="t('entry.username')" size="large" autocomplete="off"
-        autofill="off" />
+        autofill="off" @change="handleUsernameChange" />
     </a-form-item>
 
     <a-form-item class="enter-x" name="password">
@@ -161,5 +160,9 @@ watch(qrCode, (param) => {
       }
     }
   }
+}
+
+.ant-image-preview-operations-operation:not(:not(:nth-child(n+4))) {
+  display: none;
 }
 </style>
