@@ -7,7 +7,7 @@
       <a-button type="primary" danger @click="
         setWatermark({
           str: 'Scratch Game APP Backend',
-          str2: 'watermark',
+          str2: userInfo.name,
           fillStyle: '#409EFF',
         })
       ">
@@ -29,10 +29,10 @@
 import { useWatermark } from '~/components/Watermark'
 import { PageWrapper } from '~/components/Page'
 import { useUserStore } from '~/stores';
-import { storeToRefs } from 'pinia';
+import { toRaw } from 'vue';
 
 const userStore = useUserStore()
-const { userInfo } = storeToRefs(userStore)
+const userInfo = toRaw(userStore.getUserInfo)
 
 const { setWatermark, clear } = useWatermark()
 </script>

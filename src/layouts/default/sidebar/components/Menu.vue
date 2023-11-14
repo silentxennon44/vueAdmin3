@@ -24,7 +24,6 @@ const routeStore = useRouteStore()
 const menus = ref<RouteModuleList>([])
 
 watch(() => routeStore.getRoutes, (routes) => {
-  console.log(routes)
   menus.value = routes
 }, { immediate: true })
 

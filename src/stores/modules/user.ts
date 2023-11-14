@@ -37,7 +37,6 @@ export const useUserStore = defineStore('user', {
     },
 
     getUserInfo(): UserInfo {
-      console.log(this.userInfo);
       return this.userInfo || localCache.getCache(EnumCache.USER_INFO_KEY) || {}
     },
 
@@ -132,7 +131,7 @@ export const useUserStore = defineStore('user', {
     },
 
     async authenticateAction(data : { otp: string}) {
-      const { google_secret } = toRaw(this.userInfo)[0] ?? localCache.getCache(EnumCache.USER_INFO_KEY)[0]
+      const { google_secret } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
       // const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
       const isValid = authenticator.check(data.otp, google_secret)
       if (!isValid) return message.error('Invalid Code')
