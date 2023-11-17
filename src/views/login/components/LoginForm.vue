@@ -4,6 +4,8 @@ import type { FormInstance } from 'ant-design-vue'
 import { LoginStateEnum, useLoginState } from '../useLogin'
 import { useUserStore } from '~/stores/modules/user'
 import { useI18n } from 'vue-i18n'
+
+  import localCache from '~/utils/cache'
 const { t } = useI18n()
 
 interface FormState {
@@ -35,6 +37,7 @@ const formData = reactive<FormState>({
 
 const user = useUserStore()
 const handleLogin = async () => {
+  console.log(localCache.getCache('language'))
   const form = unref(formRef)
   if (!form)
     return
@@ -70,12 +73,12 @@ watch(getShow, (isShown) => {
         </a-form-item>
       </a-col>
       <!-- <a-col :span="12">
-              <a-form-item :style="{ 'text-align': 'right' }" class="enter-x">
-                <a-button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
-                  {{ t('entry.forgot') }}
-                </a-button>
-              </a-form-item>
-            </a-col> -->
+                              <a-form-item :style="{ 'text-align': 'right' }" class="enter-x">
+                                <a-button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
+                                  {{ t('entry.forgot') }}
+                                </a-button>
+                              </a-form-item>
+                            </a-col> -->
     </a-row>
 
     <a-form-item class="enter-x">

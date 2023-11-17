@@ -6,8 +6,6 @@ import LoginForm from './components/LoginForm.vue'
 import AuthenticateForm from './components/googleAuthenticatorForm.vue'
 import RegisterForm from './components/RegisterForm.vue'
 import Plum from '~/components/Plum.vue'
-
-
 </script>
 
 <template>

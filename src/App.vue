@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { translations, localeList, antdlang } from '~/i18n'
+import { translations, localeList } from '~/i18n'
 import { useI18n } from 'vue-i18n';
 import localCache from '~/utils/cache'
 import zh_CN from 'ant-design-vue/es/locale/zh_CN';
@@ -22,6 +22,7 @@ import en_US from 'ant-design-vue/es/locale/en_US'
 
 const currentLang = computed(() => locale.value) as unknown as keyof typeof translations
 const { locale } = useI18n();
+
 const language = ref(localeList[currentLang.value])
 const isLangListShown = ref(false)
 const languageList = ref<HTMLDivElement>()

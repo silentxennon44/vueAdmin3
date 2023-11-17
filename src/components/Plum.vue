@@ -5,7 +5,8 @@
 </template>
 
 <script setup='props' lang='ts'>
-import type { Fn } from '@vueuse/core'
+import { useRafFn, useWindowSize, type Fn } from '@vueuse/core'
+import { ref, reactive, onMounted } from 'vue';
 
 const r180 = Math.PI
 const r90 = Math.PI / 2
@@ -17,7 +18,7 @@ const el = ref<HTMLCanvasElement | null>(null)
 const { random } = Math
 const size = reactive(useWindowSize())
 
-const start = ref<Fn>(() => {})
+const start = ref<Fn>(() => { })
 const init = ref(4)
 const len = ref(6)
 const stopped = ref(false)
@@ -47,7 +48,7 @@ function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
   return [x + dx, y + dy]
 }
 
-onMounted(async() => {
+onMounted(async () => {
   const canvas = el.value!
   const { ctx } = initCanvas(canvas, size.width, size.height)
   const { width, height } = canvas
