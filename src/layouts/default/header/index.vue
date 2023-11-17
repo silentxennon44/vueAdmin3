@@ -6,9 +6,9 @@
     </div>
 
     <div class="flex h-full">
-      <full-screen class="layout-header-action" />
+      <!-- <full-screen class="layout-header-action" /> -->
       <user-dropdown class="layout-header-action" />
-      <setting-drawer class="layout-header-action" />
+      <!-- <setting-drawer class="layout-header-action" /> -->
     </div>
   </a-layout-header>
 </template>
@@ -55,7 +55,7 @@ const getHeaderClass = computed(() => {
   }
 
   &-action {
-    @apply flex justify-center items-center px-10px h-full text-base cursor-pointer transition-color hover:bg-gray-100;
+    @apply flex justify-center items-center px-10px h-full text-base cursor-pointer transition-color hover: bg-gray-100;
   }
 }
 </style>

@@ -2,7 +2,9 @@
   "reset": "重置",
   "return": "返回",
   "qrCodeMessage": "扫描二维码后，点击返回按钮。",
-  "enter":"进入",
-  "imagePreview":"单击图像可放大。",
-  "confirm":"确认"
+  "enter": "进入",
+  "imagePreview": "单击图像可放大。",
+  "confirm": "确认",
+  "404message": "抱歉，您尝试访问的页面不存在",
+  "signOut": "退出登录"
 }

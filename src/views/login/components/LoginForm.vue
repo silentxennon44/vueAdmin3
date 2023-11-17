@@ -4,13 +4,11 @@ import type { FormInstance } from 'ant-design-vue'
 import { LoginStateEnum, useLoginState } from '../useLogin'
 import { useUserStore } from '~/stores/modules/user'
 import { useI18n } from 'vue-i18n'
-
-  import localCache from '~/utils/cache'
 const { t } = useI18n()
 
 interface FormState {
-  username: string
-  password: string,
+	username: string
+	password: string,
 }
 
 const { setLoginState, getLoginState } = useLoginState()
@@ -18,12 +16,12 @@ const { setLoginState, getLoginState } = useLoginState()
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
 
 const formRules = {
-  username: [
-    { required: true, message: t('entry.usernameRequired'), trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: t('entry.passwordRequired'), trigger: 'blur' }
-  ],
+	username: [
+		{ required: true, message: t('entry.usernameRequired'), trigger: 'blur' }
+	],
+	password: [
+		{ required: true, message: t('entry.passwordRequired'), trigger: 'blur' }
+	],
 }
 
 const formRef = ref<FormInstance>()
@@ -31,24 +29,23 @@ const loading = ref(false)
 const remember = ref(true)
 
 const formData = reactive<FormState>({
-  username: '',
-  password: '',
+	username: '',
+	password: '',
 })
 
 const user = useUserStore()
 const handleLogin = async () => {
-  console.log(localCache.getCache('language'))
-  const form = unref(formRef)
-  if (!form)
-    return
-  const data = await form.validate() as FormState
-  user.loginAction(data)
+	const form = unref(formRef)
+	if (!form)
+		return
+	const data = await form.validate() as FormState
+	user.loginAction(data)
 }
 
 watch(getShow, (isShown) => {
-  if (!isShown) {
-    Object.keys(formData).forEach(item => formData[item] = '')
-  }
+	if (!isShown) {
+		Object.keys(formData).forEach(item => formData[item] = '')
+	}
 })
 </script>
 
@@ -72,13 +69,6 @@ watch(getShow, (isShown) => {
           </a-checkbox>
         </a-form-item>
       </a-col>
-      <!-- <a-col :span="12">
-                              <a-form-item :style="{ 'text-align': 'right' }" class="enter-x">
-                                <a-button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
-                                  {{ t('entry.forgot') }}
-                                </a-button>
-                              </a-form-item>
-                            </a-col> -->
     </a-row>
 
     <a-form-item class="enter-x">

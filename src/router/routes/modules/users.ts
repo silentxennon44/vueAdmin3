@@ -1,25 +1,25 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { SettingOutlined } from '@ant-design/icons-vue'
+import { UserOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 import i18n from '~/i18n'
 const { t } = i18n.global
 
 const route: RouteRecordRaw = {
-  path: '/about',
-  name: 'about',
+  path: '/users',
+  name: 'users',
   component: DefaultLayout,
-  redirect: '/about',
+  redirect: '/users',
   meta: {
-    icon: SettingOutlined,
+    icon: UserOutlined,
     single: true,
-    title: t('pageTitle.about'),
+    title: t('pageTitle.user'),
     sort: 4,
   },
   children: [
     {
       path: '',
-      name: 'about-page',
-      component: () => import('~/views/about/index.vue'),
+      name: 'users-table-page',
+      component: () => import('~/views/user/index.vue'),
     },
   ],
 }

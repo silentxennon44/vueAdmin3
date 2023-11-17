@@ -9,7 +9,7 @@ const route: RouteRecordRaw = {
   meta: {
     title: '外部页面',
     icon: CompassOutlined,
-    sort: 3
+    sort: 3,
   },
   children: [
     {
@@ -21,9 +21,9 @@ const route: RouteRecordRaw = {
         title: '项目文档 (内嵌)',
         sort: 1,
         routeParams: {
-          src: 'https://vue-hbs-admin-docs.netlify.app/'
-        }
-      }
+          src: 'https://vue-hbs-admin-docs.netlify.app/',
+        },
+      },
     },
     {
       path: 'inline/antdv/:src',
@@ -34,9 +34,9 @@ const route: RouteRecordRaw = {
         title: 'antVue文档 (内嵌)',
         sort: 2,
         routeParams: {
-          src: 'https://antdv.com/docs/vue/introduce-cn'
-        }
-      }
+          src: 'https://antdv.com/docs/vue/introduce-cn',
+        },
+      },
     },
     {
       path: 'https://vue-hbs-admin-docs.netlify.app/',
@@ -44,10 +44,10 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/about/index.vue'),
       meta: {
         title: '项目文档 (外链)',
-        sort: 3
-      }
-    }
-  ]
+        sort: 3,
+      },
+    },
+  ],
 }
 
 export default route
