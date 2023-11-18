@@ -2,7 +2,7 @@ import type { RouteModuleList } from './typings'
 
 export * from './basic'
 
-const modules = import.meta.globEager('./modules/**/*.ts')
+const modules = import.meta.glob('./modules/**/*.ts', { eager: true })
 
 const routeModuleList: RouteModuleList = []
 

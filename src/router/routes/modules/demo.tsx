@@ -1,7 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import {
-  AppstoreOutlined
-} from '@ant-design/icons-vue'
+import { AppstoreOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 
 const route: RouteRecordRaw = {
@@ -12,7 +10,7 @@ const route: RouteRecordRaw = {
   meta: {
     title: 'Demo',
     icon: AppstoreOutlined,
-    sort: 1
+    sort: 1,
   },
   children: [
     {
@@ -21,8 +19,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/excel/import.vue'),
       meta: {
         title: 'Import Excel',
-        sort: 1
-      }
+        sort: 1,
+      },
     },
     {
       path: 'excel/export',
@@ -30,8 +28,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/excel/export.vue'),
       meta: {
         title: 'Export Excel',
-        sort: 2
-      }
+        sort: 2,
+      },
     },
     {
       path: 'watermark',
@@ -39,8 +37,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/watermark/index.vue'),
       meta: {
         title: '水印',
-        sort: 3
-      }
+        sort: 3,
+      },
     },
     {
       path: 'count-to',
@@ -48,8 +46,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/count-to/index.vue'),
       meta: {
         title: 'CountTo',
-        sort: 4
-      }
+        sort: 4,
+      },
     },
     {
       path: 'rich-text',
@@ -57,8 +55,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/rich-text/index.vue'),
       meta: {
         title: '富文本编辑器',
-        sort: 5
-      }
+        sort: 5,
+      },
     },
     {
       path: 'cropper',
@@ -66,8 +64,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/cropper/index.vue'),
       meta: {
         title: '图片裁剪',
-        sort: 6
-      }
+        sort: 6,
+      },
     },
     {
       path: 'md-editor',
@@ -75,8 +73,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/md-editor/index.vue'),
       meta: {
         title: 'Markdown 编辑器',
-        sort: 7
-      }
+        sort: 7,
+      },
     },
     {
       path: 'fullscreen',
@@ -84,8 +82,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/fullscreen/index.vue'),
       meta: {
         title: '全屏',
-        sort: 8
-      }
+        sort: 8,
+      },
     },
     {
       path: 'testLevel2',
@@ -93,7 +91,7 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/about/index.vue'),
       meta: {
         title: '测试二级菜单',
-        sort: 9
+        sort: 9,
       },
       children: [
         {
@@ -102,7 +100,7 @@ const route: RouteRecordRaw = {
           component: () => import('~/views/about/index.vue'),
           meta: {
             title: '测试三级菜单',
-            sort: 1
+            sort: 1,
           },
           children: [
             {
@@ -111,12 +109,12 @@ const route: RouteRecordRaw = {
               component: () => import('~/views/about/index.vue'),
               meta: {
                 title: '测试四级菜单',
-                sort: 1
-              }
-            }
-          ]
-        }
-      ]
+                sort: 1,
+              },
+            },
+          ],
+        },
+      ],
     },
     {
       path: 'code-editor',
@@ -124,8 +122,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/code-editor/index.vue'),
       meta: {
         title: 'CodeEditor',
-        sort: 10
-      }
+        sort: 10,
+      },
     },
     {
       path: 'protect-element',
@@ -133,8 +131,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/protect-element/index.vue'),
       meta: {
         title: '保护元素',
-        sort: 10
-      }
+        sort: 10,
+      },
     },
     {
       path: 'tick-form',
@@ -142,10 +140,10 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/demo/tick-form/index.vue'),
       meta: {
         title: 'tick表单',
-        sort: 11
-      }
-    }
-  ]
+        sort: 11,
+      },
+    },
+  ],
 }
 
 export default route

@@ -1,7 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import {
-  ChromeOutlined
-} from '@ant-design/icons-vue'
+import { ChromeOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 
 const route: RouteRecordRaw = {
@@ -12,7 +10,7 @@ const route: RouteRecordRaw = {
   meta: {
     title: '页面',
     icon: ChromeOutlined,
-    sort: 2
+    sort: 2,
   },
   children: [
     {
@@ -21,8 +19,8 @@ const route: RouteRecordRaw = {
       component: () => import('~/views/page/not-found/index.vue'),
       meta: {
         title: '404 页面',
-        sort: 1
-      }
+        sort: 1,
+      },
     },
     {
       path: 'testHide',
@@ -31,10 +29,10 @@ const route: RouteRecordRaw = {
       meta: {
         title: '测试隐藏菜单',
         sort: 2,
-        isHide: true
-      }
-    }
-  ]
+        isHide: true,
+      },
+    },
+  ],
 }
 
 export default route
