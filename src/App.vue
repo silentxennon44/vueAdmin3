@@ -5,8 +5,7 @@
       Language: {{ language }}
     </div>
     <div ref="languageList" :class="styles.langList" v-if="isLangListShown">
-      <span @click="languageSelect(lang)" :class="styles.language" v-for="(_, lang, index) in translations"
-        :key="language">
+      <span @click="languageSelect(lang)" :class="styles.language" v-for="(_, lang) in translations" :key="language">
         {{ localeList[lang] }}
       </span>
     </div>
@@ -15,13 +14,13 @@
 
 <script setup lang="ts">
 import { translations, localeList } from '~/i18n'
-import { useI18n } from 'vue-i18n';
+import { useI18n } from 'vue-i18n'
 import localCache from '~/utils/cache'
-import zh_CN from 'ant-design-vue/es/locale/zh_CN';
+import zh_CN from 'ant-design-vue/es/locale/zh_CN'
 import en_US from 'ant-design-vue/es/locale/en_US'
 
-const currentLang = computed(() => locale.value) as unknown as keyof typeof translations
-const { locale } = useI18n();
+const currentLang = computed(() => locale.value)
+const { locale } = useI18n()
 
 const language = ref(localeList[currentLang.value])
 const isLangListShown = ref(false)
@@ -37,10 +36,10 @@ const languageSelect = (lang: keyof typeof translations) => {
   isLangListShown.value = false
   locale.value = lang
   language.value = localeList[lang]
-  localCache.setCache("language", locale.value)
+  localCache.setCache('language', locale.value)
 }
 
-watch(currentLang, (item) => {
+watchEffect(currentLang, (item) => {
   const languages = { en_US, zh_CN }
   antdLaguage.value = languages[item]
 })
@@ -91,7 +90,7 @@ watch(currentLang, (item) => {
     overflow: hidden;
     text-overflow: ellipsis;
     border: 1px solid transparent;
-    transition: .3s border ease;
+    transition: 0.3s border ease;
     cursor: pointer;
 
     &:hover {

@@ -5,18 +5,22 @@ import i18n from '~/i18n'
 const { t } = i18n.global
 
 export const supaCheckIfAccountExist = async (username = '', password = '') => {
-  let { data: user, error } = await supabase.from('users').select('*').eq('username', username).eq('password', password)
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('username', username)
+    .eq('password', password)
   return user
 }
 
 export const getAllDataFromTable = async (table = '') => {
-  let { data, error } = await supabase.from(table).select()
+  const { data, error } = await supabase.from(table).select()
   return data
 }
 
 export const getAllUsers = async (table = '', count = 10, from = 0) => {
   console.log(count, from)
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from(table)
     .select()
     .range(from, count - 1 - from)
@@ -24,7 +28,7 @@ export const getAllUsers = async (table = '', count = 10, from = 0) => {
 }
 
 export const getSecret = async (username = '', password = '') => {
-  let { data, error } = await supabase
+  const { data, error } = await supabase
     .from('users')
     .select('google_secret')
     .eq('username', username)
