@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    // "allowJs": true,
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
@@ -14,8 +15,8 @@
     "lib": ["esnext", "dom"],
     "incremental": false,
     "skipLibCheck": true,
-    "noImplicitAny":false,
-    "allowJs":true,
+    "noImplicitAny": false,
+    // "allowJs": true,
     "types": ["vite/client"],
     "paths": {
       "~/*": ["src/*"],

@@ -1,23 +1,42 @@
+// module.exports = {
+//   root: true,
+//   env: {
+//     browser: true,
+//     node: true,
+//   },
+//   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
+//   plugins: ['prettier'],
+//   rules: {
+//     'prettier/prettier': ['error'],
+//     'vue/require-default-prop': 0,
+//     'vue/html-indent': ['error', 4],
+//     'vue/singleline-html-element-content-newline': 0,
+//     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+//   },
+//   globals: {
+//     _: true,
+//   },
+// }
 module.exports = {
-    root: true,
-    env: {
-        browser: true,
-        node: true,
-    },
-    extends: [
-        'eslint:recommended',
-        'plugin:vue/vue3-recommended',
-        'prettier'
-    ],
-    plugins: ['prettier'],
-    rules: {
-        'prettier/prettier': ['error'],
-        'vue/require-default-prop': 0,
-        'vue/html-indent': ['error', 4],
-        'vue/singleline-html-element-content-newline': 0,
-        'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-    },
-    globals: {
-        _: true,
-    },
+  root: true,
+  env: {
+    browser: true,
+    node: true,
+  },
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended'],
+  rules: {
+    'vue/require-default-prop': 0,
+    'vue/html-indent': ['error', 4],
+    'vue/singleline-html-element-content-newline': 0,
+    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+  },
+  globals: {
+    _: true,
+  },
+  parserOptions: {
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false, // <== ADD THIS
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+  },
 }

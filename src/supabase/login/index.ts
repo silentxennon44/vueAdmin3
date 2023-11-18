@@ -1,15 +1,12 @@
-import axios from 'axios'
 import { supabase } from '../'
 import { authenticator } from 'otplib'
 import QRCode from 'qrcode'
-import * as speakeasy from 'speakeasy'
-import { UserInfo } from '#/store'
 import i18n from '~/i18n'
 const { t } = i18n.global
 
 export const supaCheckIfAccountExist = async (username = '', password = '') => {
   let { data: user, error } = await supabase.from('users').select('*').eq('username', username).eq('password', password)
-  return user as unknown as UserInfo[]
+  return user
 }
 
 export const getAllDataFromTable = async (table = '') => {
@@ -17,8 +14,12 @@ export const getAllDataFromTable = async (table = '') => {
   return data
 }
 
-export const getUserInfo = async (username) => {
-  let { data, error } = await supabase.from(table).select()
+export const getAllUsers = async (table = '', count = 10, from = 0) => {
+  console.log(count, from)
+  let { data, error } = await supabase
+    .from(table)
+    .select()
+    .range(from, count - 1 - from)
   return data
 }
 
@@ -29,15 +30,6 @@ export const getSecret = async (username = '', password = '') => {
     .eq('username', username)
     .eq('password', password)
   return data
-}
-
-function generateOTP(secret: string, timestamp = null) {
-  console.log(secret, timestamp)
-  const otp = speakeasy.totp({
-    secret: secret,
-    time: new Date().getSeconds() || undefined,
-  })
-  return otp
 }
 
 export const postSupabaseData = async (
@@ -63,19 +55,6 @@ export const postSupabaseData = async (
     error: error !== null,
     mess: error !== null ? t('entry.registerFailed') : t('entry.registerSuccess'),
   }
-  // return {
-  //   error: false,
-  //   message: false? "Registration Failed!" : "Registration Succesful!",
-  //   qrCode: false? "" : qr
-  // }
-}
-
-export const checkIfValidGoogleAuthenticatorCode = (secret: string, otp: string) => {
-  console.log(secret, otp, generateOTP(secret))
-  if (!speakeasy.totp.verify({ secret: secret, encoding: 'base32', token: otp })) {
-    return false
-  }
-  return true
 }
 
 export const generateQRcode = async (username = '') => {
