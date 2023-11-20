@@ -17,3 +17,14 @@
   justify-content: center;
   align-items: center;
 }
+
+img {
+  /* Your styles for all img tags go here */
+  max-width: 100%; /* Example: make sure images don't exceed their container width */
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

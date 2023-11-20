@@ -1,6 +1,6 @@
 <template>
   <div class="logo">
-    <img class="max-h-full" :src="LogoUrl" alt="Logo">
+    <img class="max-h-full" :src="LogoUrl" alt="Logo" />
     <span v-show="showTitle" class="ml-8px text-white text-base font-bold">Scratch Card App</span>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import LogoUrl from '~/assets/logo.png'
 
 defineProps({
-  showTitle: { type: Boolean, default: true }
+  showTitle: { type: Boolean, default: true },
 })
 </script>
 

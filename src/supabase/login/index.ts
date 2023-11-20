@@ -13,13 +13,7 @@ export const supaCheckIfAccountExist = async (username = '', password = '') => {
   return user
 }
 
-export const getAllDataFromTable = async (table = '') => {
-  const { data, error } = await supabase.from(table).select()
-  return data
-}
-
-export const getAllUsers = async (table = '', count = 10, from = 0) => {
-  console.log(count, from)
+export const getDataFromTable = async (table = '', count = 10, from = 0) => {
   const { data, error } = await supabase
     .from(table)
     .select()
@@ -76,4 +70,14 @@ export const generateQRcode = async (username = '') => {
     secret,
     imgLink,
   }
+}
+
+export const getColumns = async (table = '') => {
+  const {
+    data,
+    error,
+    data: { definitions },
+  } = await supabase.from('').select()
+
+  return Object.keys(definitions[table].properties)
 }

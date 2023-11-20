@@ -1,11 +1,6 @@
 <template>
-  <a-layout-sider
-    v-model:collapsed="getCollapsed"
-    :class="getSidebarClass"
-    :trigger="null"
-    collapsible
-    collapsed-width="56"
-  >
+  <a-layout-sider v-model:collapsed="getCollapsed" :class="getSidebarClass" :trigger="null" collapsible
+    collapsed-width="56">
     <logo :show-title="!getCollapsed" />
     <Menu />
   </a-layout-sider>

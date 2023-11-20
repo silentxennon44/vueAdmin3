@@ -7,84 +7,39 @@
 <script setup lang="ts">
 import { PageWrapper } from '~/components/Page'
 import { useI18n } from 'vue-i18n'
-import { getAllUsers } from '~/supabase/login'
+import { getDataFromTable, getColumns } from '~/supabase/login'
 import type { ColumnsType } from 'ant-design-vue/lib/table'
 const { t } = useI18n()
 
-const columns: ColumnsType = [
-  {
-    title: 'User ID',
-    dataIndex: 'user_id',
-    align: 'center',
-    key: 'user_id',
-  },
-  {
-    title: 'First Name',
-    dataIndex: 'first_name',
-    align: 'center',
-    key: 'first_name',
-  },
-  {
-    title: 'Last Name',
-    dataIndex: 'last_name',
-    align: 'center',
-    key: 'last_name',
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    align: 'center',
-    key: 'age',
-  },
-  {
-    title: 'Email Address',
-    dataIndex: 'email',
-    align: 'center',
-    key: 'email',
-  },
-  {
-    title: 'Country',
-    dataIndex: 'country',
-    align: 'center',
-    key: 'country',
-  },
-  {
-    title: 'Postal Code',
-    dataIndex: 'postal_code',
-    align: 'center',
-    key: 'postal_code',
-  },
-  {
-    title: 'Favourite Color',
-    dataIndex: 'favorite_color',
-    align: 'center',
-    key: 'favorite_color',
-  },
-  {
-    title: 'Registration Number',
-    dataIndex: 'registration_number',
-    align: 'center',
-    key: 'registration_number',
-  },
-  {
-    title: 'Last Login',
-    dataIndex: 'last_login',
-    align: 'center',
-    key: 'last_login',
-  },
-]
-
 const dataSource = ref<[] | object>([])
+const columns = ref<ColumnsType>([])
 const loading = ref<boolean>(true)
 
 const getData = async (count = Number.MAX_SAFE_INTEGER, from = 0) => {
   loading.value = true
-  const data = (await getAllUsers('mock_users', count, from)) as Array<unknown>
+  const data = (await getDataFromTable('transaction', count, from)) as Array<unknown>
   dataSource.value = data
   loading.value = false
 }
 
+const generateColumns = async () => {
+  const columnNames = await getColumns('transaction')
+  columns.value = columnNames.map((column) => {
+    return {
+      title: column
+        .replace(/_/g, ' ')
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' '),
+      dataIndex: column,
+      align: 'center',
+      key: column,
+    }
+  })
+}
+
 onMounted(() => {
+  generateColumns()
   getData()
 })
 </script>
@@ -101,6 +56,7 @@ onMounted(() => {
 .ant-pagination-jump-next,
 .ant-pagination-jump-prev {
   .ant-pagination-item-container {
+
     .anticon-double-right,
     .anticon-double-left {
       svg {

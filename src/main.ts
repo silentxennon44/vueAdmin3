@@ -14,23 +14,23 @@ import { setupMutationObserver } from '~/utils/useMutationObserver'
 import i18n from './i18n'
 
 function setupApp() {
-    const app = createApp(App)
+  const app = createApp(App)
 
-    // Configure store
-    setupStore(app)
+  // Configure store
+  setupStore(app)
 
-    // Configure router
-    setupRouter(app)
+  // Configure router
+  setupRouter(app)
 
-    // setupi18n
-    app.use(i18n)
+  // setupi18n
+  app.use(i18n)
 
-    // Configure directives
-    setupGlobDirectives(app)
-    app.mount('#app')
+  // Configure directives
+  setupGlobDirectives(app)
+  app.mount('#app')
 
-    // setup mutation observer
-    setupMutationObserver()
+  // setup mutation observer
+  setupMutationObserver()
 }
 
 setupApp()
