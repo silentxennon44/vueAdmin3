@@ -39,10 +39,13 @@ const languageSelect = (lang: keyof typeof translations) => {
   localCache.setCache('language', locale.value)
 }
 
-watchEffect(currentLang, (item) => {
-  const languages = { en_US, zh_CN }
-  antdLaguage.value = languages[item]
-})
+watchEffect(
+  () => currentLang.value,
+  (item: string | number): any => {
+    const languages = { en_US, zh_CN }
+    antdLaguage.value = languages[item]
+  }
+)
 
 // const handleOutsideClick = (e: MouseEvent) => {
 //   console.log(e.target === languageList.value, e.target === languagePicker.value)

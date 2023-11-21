@@ -7,8 +7,8 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 interface FormState {
-	username: string
-	password: string,
+  username: string
+  password: string
 }
 
 const { setLoginState, getLoginState } = useLoginState()
@@ -16,12 +16,8 @@ const { setLoginState, getLoginState } = useLoginState()
 const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN)
 
 const formRules = {
-	username: [
-		{ required: true, message: t('entry.usernameRequired'), trigger: 'blur' }
-	],
-	password: [
-		{ required: true, message: t('entry.passwordRequired'), trigger: 'blur' }
-	],
+  username: [{ required: true, message: t('entry.usernameRequired'), trigger: 'blur' }],
+  password: [{ required: true, message: t('entry.passwordRequired'), trigger: 'blur' }],
 }
 
 const formRef = ref<FormInstance>()
@@ -29,36 +25,45 @@ const loading = ref(false)
 const remember = ref(true)
 
 const formData = reactive<FormState>({
-	username: '',
-	password: '',
+  username: '',
+  password: '',
 })
 
 const user = useUserStore()
 const handleLogin = async () => {
-	const form = unref(formRef)
-	if (!form)
-		return
-	const data = await form.validate() as FormState
-	user.loginAction(data)
+  const form = unref(formRef)
+  if (!form) return
+  const data = (await form.validate()) as FormState
+  user.loginAction(data)
 }
 
 watch(getShow, (isShown) => {
-	if (!isShown) {
-		Object.keys(formData).forEach(item => formData[item] = '')
-	}
+  if (!isShown) {
+    Object.keys(formData).forEach((item) => (formData[item] = ''))
+  }
 })
 </script>
 
 <template>
   <a-form v-show="getShow" ref="formRef" :model="formData" :rules="formRules" @keypress.enter="handleLogin">
     <a-form-item class="enter-x" name="username">
-      <a-input v-model:value="formData.username" :placeholder="t('entry.username')" size="large" autocomplete="off"
-        autofill="off" />
+      <a-input
+        v-model:value="formData.username"
+        :placeholder="t('entry.username')"
+        size="large"
+        autocomplete="off"
+        autofill="off"
+      />
     </a-form-item>
 
     <a-form-item class="enter-x" name="password">
-      <a-input-password v-model:value="formData.password" :placeholder="t('entry.password')" size="large"
-        autocomplete="off" autofill="off" />
+      <a-input-password
+        v-model:value="formData.password"
+        :placeholder="t('entry.password')"
+        size="large"
+        autocomplete="off"
+        autofill="off"
+      />
     </a-form-item>
 
     <a-row class="enter-x">

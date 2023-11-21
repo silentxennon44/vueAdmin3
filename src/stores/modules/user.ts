@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { router } from '~/router'
 import { EnumCache, EnumPath } from '~/enums'
 import localCache from '~/utils/cache'
-import { getMenuList, getUserInfo, loginRequest } from '~/api/user'
+import { getMenuList, getUserInfo } from '~/api/user'
 import { isArray } from '~/utils/is'
 import { mapMenuToRoutes } from '~/utils/map-menu'
 import { message } from 'ant-design-vue'
@@ -11,10 +11,10 @@ import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
 import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
 import { authenticator } from 'otplib'
-import { postSupabaseData, supaCheckIfAccountExist, getSecret } from '~/supabase/login'
+import { supaCheckIfAccountExist } from '~/supabase/login'
 import { toRaw } from 'vue'
 
-const { setLoginState, getLoginState } = useLoginState()
+const { setLoginState } = useLoginState()
 
 interface UserState {
   token?: string
@@ -78,8 +78,14 @@ export const useUserStore = defineStore('user', {
     async loginAction(account: { username: string; password: string }) {
       const data = await supaCheckIfAccountExist(account.username, account.password)
       if (!data || !data.length) return message.error('Invalid Username or Password', 2)
+      // if (!data[0].is_new || !data[0].is_new) return message.error('Malformed data recieved please try again later', 2)
+      const is_new = Boolean(data[0].is_new)
 
       this.setUserInfo(data[0])
+
+      if (is_new) {
+        return setLoginState(LoginStateEnum.FIRST_LOGIN)
+      }
       setLoginState(LoginStateEnum.ATHENTICATOR)
 
       // const isValid = authenticator.check(token, secret);
@@ -129,7 +135,7 @@ export const useUserStore = defineStore('user', {
     },
 
     async authenticateAction(data: { otp: string }) {
-      const { google_secret } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
+      const { google_secret, is_new } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
       // const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
       const isValid = authenticator.check(data.otp, google_secret)
       if (!isValid) return message.error('Invalid Code')

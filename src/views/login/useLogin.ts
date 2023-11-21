@@ -1,4 +1,4 @@
-import { useUserStore } from "~/stores"
+import { useUserStore } from '~/stores'
 
 export enum LoginStateEnum {
   LOGIN,
@@ -6,7 +6,8 @@ export enum LoginStateEnum {
   RESET_PASSWORD,
   MOBILE,
   QR_CODE,
-  ATHENTICATOR
+  ATHENTICATOR,
+  FIRST_LOGIN,
 }
 
 const currentState = ref(LoginStateEnum.LOGIN)

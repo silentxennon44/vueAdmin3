@@ -8,4 +8,5 @@ export interface UserInfo {
   roles: any
   qr?: string
   google_secret?: string
+  is_new?: boolean
 }

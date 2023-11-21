@@ -38,6 +38,7 @@ export const postSupabaseData = async (
     .from(table)
     .insert([
       {
+        id: 1002,
         name: params.username,
         username: params.username,
         password: params.password,
