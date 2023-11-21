@@ -1,5 +1,3 @@
 import PageWrapper from './src/PageWrapper.vue'
 
-export {
-  PageWrapper
-}
+export { PageWrapper }

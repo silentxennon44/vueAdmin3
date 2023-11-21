@@ -1,6 +1,6 @@
 <template>
   <page-wrapper :title="t('pageTitle.user')" content="Table of all user in teh database ">
-    <a-table :columns="columns" :dataSource="dataSource" :loading="loading" />
+    <a-table :columns="columns" :dataSource="dataSource" :loading="loading" :scroll="{ y: tableHeight }" />
   </page-wrapper>
 </template>
 
@@ -9,11 +9,18 @@ import { PageWrapper } from '~/components/Page'
 import { useI18n } from 'vue-i18n'
 import { getDataFromTable, getColumns } from '~/supabase/login'
 import type { ColumnsType } from 'ant-design-vue/lib/table'
+import { useWindowSize } from 'vue-window-size'
+
+const { height } = useWindowSize()
 const { t } = useI18n()
 
 const dataSource = ref<[] | object>([])
 const columns = ref<ColumnsType>([])
 const loading = ref<boolean>(true)
+
+const tableHeight = height.value - 107 - 56 - 64 - 70 - 90
+
+console.log(tableHeight)
 
 const getData = async (count = Number.MAX_SAFE_INTEGER, from = 0) => {
   loading.value = true
@@ -56,7 +63,6 @@ onMounted(() => {
 .ant-pagination-jump-next,
 .ant-pagination-jump-prev {
   .ant-pagination-item-container {
-
     .anticon-double-right,
     .anticon-double-left {
       svg {

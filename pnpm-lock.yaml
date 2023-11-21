@@ -95,6 +95,9 @@ dependencies:
   vue-router:
     specifier: 4.1.2
     version: 4.1.2(vue@3.2.37)
+  vue-window-size:
+    specifier: ^2.0.0
+    version: 2.0.0(vue@3.2.37)
   xlsx:
     specifier: 0.18.5
     version: 0.18.5
@@ -9328,6 +9331,14 @@ packages:
       vue: ^3.0.0
     dependencies:
       is-plain-object: 3.0.1
+      vue: 3.2.37
+    dev: false
+
+  /vue-window-size@2.0.0(vue@3.2.37):
+    resolution: {integrity: sha512-Bx3O7gC71wWSfoY7XMHY4+sP1YKmXGaWkMtpSLy8JlItr1VVp5US65KPIyOSyZMZD1gcr0abaFuiQy+zL45q8A==}
+    peerDependencies:
+      vue: ^3.0 || ^2.7
+    dependencies:
       vue: 3.2.37
     dev: false
 
