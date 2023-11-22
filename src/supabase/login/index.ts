@@ -30,15 +30,12 @@ export const getSecret = async (username = '', password = '') => {
   return data
 }
 
-export const postSupabaseData = async (
-  table = '',
-  params: { username: string; password: string; google_secret: string }
-) => {
+export const supaCreateNewuser = async (table = '', params: { [key: string]: string }) => {
   const { error } = await supabase
     .from(table)
     .insert([
       {
-        id: 1002,
+        id: 1003,
         name: params.username,
         username: params.username,
         password: params.password,
@@ -54,6 +51,12 @@ export const postSupabaseData = async (
     error: error !== null,
     mess: error !== null ? t('entry.registerFailed') : t('entry.registerSuccess'),
   }
+}
+
+export const supaUpdateIsNew = async (table = '', username = '') => {
+  const { data, error } = await supabase.from(table).update({ is_new: false }).eq('username', username).select()
+
+  return { data, error }
 }
 
 export const generateQRcode = async (username = '') => {

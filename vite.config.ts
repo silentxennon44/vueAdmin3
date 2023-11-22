@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import pkg from './package.json'
 import { wrapperEnv } from './build/utils'
 import setupVitePlugins from './build/plugins'
-import { createProxy } from './build/proxy'
+// import { createProxy } from './build/proxy'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)

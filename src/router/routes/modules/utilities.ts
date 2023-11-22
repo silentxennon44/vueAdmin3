@@ -1,25 +1,25 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { SlackOutlined } from '@ant-design/icons-vue'
+import { DeploymentUnitOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 import i18n from '~/i18n'
 const { t } = i18n.global
 
 const route: RouteRecordRaw = {
-  path: '/gameThemeAssets',
-  name: 'gameThemeAssets',
+  path: '/utilities',
+  name: 'utilities',
   component: DefaultLayout,
-  redirect: '/gameThemeAssets',
+  redirect: '/utilities',
   meta: {
-    icon: SlackOutlined,
+    icon: DeploymentUnitOutlined,
     single: true,
-    title: 'Game Theme Assets',
+    title: 'Utilities Management',
     sort: 4,
   },
   children: [
     {
       path: '',
-      name: 'GameThemeAssets-table-page',
-      component: () => import('~/views/gameThemeAssets/index.vue'),
+      name: 'Utilitites-table-page',
+      component: () => import('~/views/utilities/utilsManagement.vue'),
     },
   ],
 }

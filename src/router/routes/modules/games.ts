@@ -1,25 +1,25 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { CreditCardOutlined } from '@ant-design/icons-vue'
+import { AppstoreOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 import i18n from '~/i18n'
 const { t } = i18n.global
 
 const route: RouteRecordRaw = {
-  path: '/credits',
-  name: 'credits',
+  path: '/games',
+  name: 'games',
   component: DefaultLayout,
-  redirect: '/credits',
+  redirect: '/games',
   meta: {
-    icon: CreditCardOutlined,
+    icon: AppstoreOutlined,
     single: true,
-    title: 'Credits',
-    sort: 4,
+    title: 'Games Management',
+    sort: 2,
   },
   children: [
     {
       path: '',
-      name: 'Credits-table-page',
-      component: () => import('~/views/credits/index.vue'),
+      name: 'Games-table-page',
+      component: () => import('~/views/games/gameManagement.vue'),
     },
   ],
 }

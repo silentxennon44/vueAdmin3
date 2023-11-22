@@ -1,25 +1,25 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { DingdingOutlined } from '@ant-design/icons-vue'
+import { FundOutlined } from '@ant-design/icons-vue'
 import { DefaultLayout } from '~/layouts'
 import i18n from '~/i18n'
 const { t } = i18n.global
 
 const route: RouteRecordRaw = {
-  path: '/game',
-  name: 'game',
+  path: '/reports',
+  name: 'reports',
   component: DefaultLayout,
-  redirect: '/game',
+  redirect: '/reports',
   meta: {
-    icon: DingdingOutlined,
+    icon: FundOutlined,
     single: true,
-    title: 'Game',
-    sort: 4,
+    title: 'Reports Management',
+    sort: 3,
   },
   children: [
     {
       path: '',
-      name: 'Game-table-page',
-      component: () => import('~/views/game/index.vue'),
+      name: 'Reports-table-page',
+      component: () => import('~/views/reports/reportsManagement.vue'),
     },
   ],
 }

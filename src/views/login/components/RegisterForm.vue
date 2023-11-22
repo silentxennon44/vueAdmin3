@@ -8,7 +8,7 @@ import 'ant-design-vue/lib/modal/style/index.css'
 import { LoginStateEnum, useLoginState } from '../useLogin'
 import { StrengthMeter } from '~/components/StrengthMeter'
 // import { createVNode } from 'vue'
-import { generateQRcode, postSupabaseData } from '~/supabase/login'
+import { generateQRcode, supaCreateNewuser } from '~/supabase/login'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
@@ -43,7 +43,7 @@ const handleRegister = async () => {
   if (data.password !== data.confirmPassword) return message.error('Passwords are not the same!')
   console.log(1)
   await handleGenerateQR()
-  postSupabaseData('users', formData).then(({ error }) => {
+  supaCreateNewuser('users', formData).then(({ error }) => {
     if (error) return message.error(t('entry.registerFailed'))
     message.success(t('entry.registerSuccess'))
     handleBackLogin()

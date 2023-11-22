@@ -11,7 +11,7 @@ import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
 import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
 import { authenticator } from 'otplib'
-import { supaCheckIfAccountExist } from '~/supabase/login'
+import { supaCreateNewuser, supaCheckIfAccountExist, supaUpdateIsNew } from '~/supabase/login'
 import { toRaw } from 'vue'
 
 const { setLoginState } = useLoginState()
@@ -135,11 +135,16 @@ export const useUserStore = defineStore('user', {
     },
 
     async authenticateAction(data: { otp: string }) {
-      const { google_secret, is_new } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
+      const { google_secret, is_new, username } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
       // const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
       const isValid = authenticator.check(data.otp, google_secret)
       if (!isValid) return message.error('Invalid Code')
       message.info('Login Success. Welcome!')
+
+      if (is_new) {
+        const updateRecord = await supaUpdateIsNew('users', username)
+        if (updateRecord.error) return message.error('Something went wrong. Please try again later')
+      }
       const genRanHex = (size: number) =>
         [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')
       // localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
