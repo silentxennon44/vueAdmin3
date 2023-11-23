@@ -1,21 +1,10 @@
 <template>
-  <a-form
-    v-if="getShow"
-    ref="formRef"
-    :model="formData"
-    @keypress.enter="handleReset"
-  >
-    <a-form-item
-      class="enter-x"
-      name="username"
-    >
+  <a-form v-if="getShow" ref="formRef" :model="formData" @keypress.enter="handleReset">
+    <a-form-item class="enter-x" name="username">
       <a-input v-model:value="formData.username" :placeholder="t('entry.username')" size="large" />
     </a-form-item>
 
-    <a-form-item
-      class="enter-x"
-      name="mobile"
-    >
+    <a-form-item class="enter-x" name="mobile">
       <a-input v-model:value="formData.mobile" :placeholder="t('entry.phoneNumber')" size="large" />
     </a-form-item>
 
@@ -64,10 +53,10 @@ const loading = ref(false)
 const formData = reactive<FormState>({
   username: '',
   mobile: '',
-  sms: ''
+  sms: '',
 })
 
-const handleReset = async() => {
+const handleReset = async () => {
   message.warning(t('entry.passwordResetNotAvailable'))
 }
 </script>

@@ -10,6 +10,7 @@ import { PageWrapper } from '~/components/Page'
 import { useI18n } from 'vue-i18n'
 import { getDataFromTable, getColumns } from '~/supabase/login'
 import type { ColumnsType } from 'ant-design-vue/lib/table'
+import { message } from 'ant-design-vue'
 // import { useWindowSize } from 'vue-window-size'
 
 // const { height } = useWindowSize()
@@ -49,6 +50,7 @@ const generateColumns = async () => {
 onMounted(() => {
   generateColumns()
   getData()
+  message.info('This is a normal message')
 })
 </script>
 <style lang="less">

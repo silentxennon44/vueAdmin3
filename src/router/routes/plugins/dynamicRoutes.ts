@@ -1,10 +1,13 @@
 import type { RouteModuleList } from '../typings'
 import { useRouteStore } from '~/stores'
+import type { RouteRecordRaw } from 'vue-router'
 
 type RouteModule = GetArrayItemType<RouteModuleList>
 
 function sortBySortKey(routerModuleList: RouteModuleList | RouteModule['children']) {
-  return routerModuleList!.sort((a: RouteModule, b: RouteModule) => (a.meta?.sort || Number.MAX_VALUE) - (b.meta?.sort || Number.MAX_VALUE))
+  return routerModuleList!.sort(
+    (a: RouteModule, b: RouteModule) => (a.meta?.sort || Number.MAX_VALUE) - (b.meta?.sort || Number.MAX_VALUE)
+  )
 }
 
 function sortRoutesBySortKey(routerModuleList: RouteModuleList) {
@@ -17,7 +20,7 @@ function sortRoutesBySortKey(routerModuleList: RouteModuleList) {
 
 function filterHideRoute(routerModuleList: RouteModuleList | RouteModule['children']) {
   if (!routerModuleList) return []
-  const filteredModuleList = []
+  const filteredModuleList: RouteRecordRaw[] = []
   // for 循环提高执行效率
   for (let i = 0; i < routerModuleList.length; i++) {
     const routeModule = routerModuleList[i]

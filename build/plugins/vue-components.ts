@@ -11,8 +11,8 @@ export default function setupVueComponents() {
     resolvers: [
       AntDesignVueResolver(),
       IconsResolver({
-        customCollections: ['my-icons']
-      })
-    ]
+        customCollections: ['my-icons'],
+      }),
+    ],
   })
 }

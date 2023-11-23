@@ -24,35 +24,6 @@ const route: RouteRecordRaw = {
         sort: 1,
       },
     },
-    // {
-    //   path: 'wallet',
-    //   name: 'wallet',
-    //   component: () => import('~/views/users/usersManagement.vue'),
-    //   meta: {
-    //     title: 'Wallets Info',
-    //     sort: 1,
-    //   },
-    //   children: [
-    //     {
-    //       path: 'list',
-    //       name: 'Wallet Info',
-    //       component: () => import('~/views/users/usersManagement.vue'),
-    //       meta: {
-    //         title: 'Wallet Info',
-    //         sort: 1,
-    //       },
-    //     },
-    //     {
-    //       path: 'transaction/history',
-    //       name: 'Wallet Transaction History',
-    //       component: () => import('~/views/users/usersManagement.vue'),
-    //       meta: {
-    //         title: 'Wallet Transaction History',
-    //         sort: 1,
-    //       },
-    //     },
-    //   ],
-    // },
     {
       path: 'levels',
       name: 'Users Level',
