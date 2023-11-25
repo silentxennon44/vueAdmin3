@@ -25,12 +25,30 @@ const route: RouteRecordRaw = {
       },
     },
     {
+      path: 'allTransaction',
+      name: 'All Transactions',
+      component: () => import('~/views/users/components/allTransactions/allTransactions.vue'),
+      meta: {
+        title: 'All Transactions',
+        sort: 2,
+      },
+    },
+    {
+      path: 'allWallet',
+      name: 'All Wallet',
+      component: () => import('~/views/users/components/allWallet/allWallet.vue'),
+      meta: {
+        title: 'All Wallet',
+        sort: 3,
+      },
+    },
+    {
       path: 'levels',
       name: 'Users Level',
       component: () => import('~/views/users/usersManagement.vue'),
       meta: {
         title: 'Users Levels',
-        sort: 2,
+        sort: 4,
       },
     },
   ],

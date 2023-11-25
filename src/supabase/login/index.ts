@@ -2,6 +2,7 @@ import { supabase } from '../'
 import { authenticator } from 'otplib'
 import QRCode from 'qrcode'
 import i18n from '~/i18n'
+import * as _ from 'lodash-es'
 const { t } = i18n.global
 
 export const supaCheckIfAccountExist = async (username = '', password = '') => {
@@ -18,6 +19,14 @@ export const getDataFromTable = async (table = '', count = 10, from = 0) => {
     .from(table)
     .select()
     .range(from, count - 1 - from)
+  return data
+}
+
+export const getSpecificData = async (table = '', params: any) => {
+  const { data, error } = await supabase.from(table).select('*, users!inner(*, betting!inner(*))').eq('user_id', params)
+  console.log(_.merge(data, data[0].users, data[0].users.betting))
+  // const { data, error } = await supabase.from(table).select('*, users(*, betting(*))').eq('user_id', params)
+
   return data
 }
 

@@ -19,6 +19,27 @@
           <a-range-picker v-model:value="serchDateRange" :format="dateFormat" :disabled-date="disabledDate" />
           <a-button type="primary" @click="handleSearchDate">Search Range</a-button>
         </a-input-group>
+        <a-input-group class="optionsButton">
+          <a-button type="primary" @click="showHideBatchOperations"
+            >{{ !showBatchOperations ? 'Hide' : 'Show' }} Options</a-button
+          >
+          <div class="batchOperations" v-if="!showBatchOperations">
+            <a-button type="primary" @click="handleBatchUpdate">Batch Update</a-button>
+            <a-button type="primary" danger @click="handleBatchDelete">Batch Delete</a-button>
+          </div>
+        </a-input-group>
+        <a-input-group class="optionsButton">
+          <a-button type="default" @click="handleViewAll('Transaction')">View all Transactions</a-button>
+          <a-button type="default" @click="handleViewAll('Wallet')">View all Wallets</a-button>
+        </a-input-group>
+        <a-input-group class="showHide">
+          <a-button type="default" @click="handleShowReveal('password')"
+            >{{ passwordVissible ? 'Hide' : 'Show' }} Passwords</a-button
+          >
+          <a-button type="default" @click="handleShowReveal('gsecret')"
+            >{{ gsecretVissible ? 'Hide' : 'Show' }} Google Secrets</a-button
+          >
+        </a-input-group>
       </div>
     </a-card>
     <a-table
@@ -28,6 +49,9 @@
       :loading="loading"
       @resizeColumn="handleResizeColumn"
       :row-selection="rowSelection"
+      :class="{
+        tableNoSelection: showBatchOperations,
+      }"
     >
       <template #bodyCell="{ record, column }">
         <div v-if="column.dataIndex.includes('options')" class="options">
@@ -36,16 +60,28 @@
           <a-button size="small" type="default" @click="handleViewWallet(record)">View Wallet</a-button>
           <a-button size="small" type="default" @click="handleViewTransactions(record)">View Transactions</a-button>
         </div>
+        <span v-if="['password'].includes(column.dataIndex)">
+          {{ passwordVissible ? record[column.dataIndex] : transformText(record[column.dataIndex]) }}
+        </span>
+        <span v-if="['google_secret'].includes(column.dataIndex)">
+          {{ gsecretVissible ? record[column.dataIndex] : transformText(record[column.dataIndex]) }}
+        </span>
       </template>
     </a-table>
-    <a-modal v-model:visible="UpdateVissible" title="Update User Info" @ok="handleOk">
+    <a-modal v-model:visible="UpdateVissible" title="Update User Info" @ok="handleOk" centered>
+      <update-record :record="toRaw(currentRecord)" :submit="submit" />
+    </a-modal>
+    <a-modal v-model:visible="WallletInfoVissible" title="Wallet Info" @ok="handleOk" centered>
       <p v-for="key in Object.keys(currentRecord)" :key="key">{{ key }}: {{ currentRecord[key] }}"</p>
     </a-modal>
-    <a-modal v-model:visible="WallletInfoVissible" title="Wallet Info" @ok="handleOk">
-      <p v-for="key in Object.keys(currentRecord)" :key="key">{{ key }}: {{ currentRecord[key] }}"</p>
-    </a-modal>
-    <a-modal v-model:visible="HistoryVissible" title="Wallet Transaction History" @ok="handleOk">
-      <p v-for="key in Object.keys(currentRecord)" :key="key">{{ key }}: {{ currentRecord[key] }}"</p>
+    <a-modal
+      v-model:visible="HistoryVissible"
+      :title="'Wallet Transaction History : ' + toRaw(currentRecord)?.name"
+      @ok="handleOk"
+      style="width: auto"
+    >
+      <!-- <p v-for="key in Object.keys(currentRecord)" :key="key">{{ key }}: {{ currentRecord[key] }}"</p> -->
+      <transaction-history :data="toRaw(currentRecord)" />
     </a-modal>
   </page-wrapper>
 </template>
@@ -59,6 +95,8 @@ import { createVNode, toRaw } from 'vue'
 import dayjs, { Dayjs } from 'dayjs'
 import { Modal, Table, message } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
+import TransactionHistory from './components/transactions/transactionHistory.vue'
+import updateRecord from './components/updateRecord/updateRecord.vue'
 
 const { t } = useI18n()
 const dataSource = ref<[] | object>([])
@@ -66,7 +104,8 @@ const columns = ref<ColumnsType>([])
 const loading = ref<boolean>(true)
 
 const UpdateVissible = ref<boolean>(false)
-const showOptions = ref<boolean>(false)
+const submit = ref<boolean>(false)
+const showBatchOperations = ref<boolean>(true) // purposely set to inverted value due to some bug
 const WallletInfoVissible = ref<boolean>(false)
 const HistoryVissible = ref<boolean>(false)
 const currentRecord = ref<object>({})
@@ -74,6 +113,43 @@ const searchStringObj = ref<{ column: string; value: string }>({ column: 'id', v
 const dateFormat = ['DD/MM/YYYY', 'DD/MM/YY']
 const serchDateRange = ref<[Dayjs, Dayjs]>([dayjs('2023/11/23', dateFormat), dayjs('2023/11/23', dateFormat)])
 const selectedRowKeys = ref<any[]>([])
+const passwordVissible = ref<boolean>(false)
+const gsecretVissible = ref<boolean>(false)
+
+const router = useRouter()
+
+const transformText = (str = '') => {
+  return Array(str.length).join('*')
+}
+
+const handleShowReveal = (str: 'password' | 'gsecret') => {
+  if (str === 'password') {
+    passwordVissible.value = !passwordVissible.value
+  } else {
+    gsecretVissible.value = !gsecretVissible.value
+  }
+}
+
+const handleViewAll = (str: 'Wallet' | 'Transaction') => {
+  router.push(`/users/all${str}`)
+}
+
+const handleBatchUpdate = () => {
+  const selection = toRaw(selectedRowKeys.value)
+  if (selection.length < 1) return message.error('Please select atleast 1 record')
+  if (selection.length === 1) return message.info('Selection is 1 record only. Use individual update instead')
+}
+
+const handleBatchDelete = () => {
+  const selection = toRaw(selectedRowKeys.value)
+  if (selection.length < 1) return message.error('Please select atleast 1 record')
+  if (selection.length === 1) return message.info('Selection is 1 record only. Use individual delete instead')
+}
+
+const showHideBatchOperations = () => {
+  showBatchOperations.value = !showBatchOperations.value
+  console.log(showBatchOperations.value)
+}
 
 const handleSearchStr = () => {
   loading.value = true
@@ -83,18 +159,17 @@ const handleSearchStr = () => {
   }, 1500)
 }
 const onSelectChange = (changableRowKeys: string[]) => {
-  // console.log('selectedRowKeys changed: ', changableRowKeys)
   selectedRowKeys.value = changableRowKeys
 }
-const disabledDate = (current: Dayjs) => {
-  // Can not select days before today and today
-  // return current && current < dayjs().endOf('day').subtract(1, 'day')
-}
+const disabledDate = (current: Dayjs) => {}
 
 const onSelectAll = (selected: any, selectedRows: any, changeRows: any) => {
   if (selected) {
     console.log(selected)
-    return message.info('asdasdasd')
+    return message.info(
+      'This Button on only selects all rows in the current page. If you want to select all rows in all pages, please use the "Select All Data" in the caret option beside',
+      5
+    )
   }
 }
 
@@ -163,23 +238,6 @@ const getData = async (count = Number.MAX_SAFE_INTEGER, from = 0) => {
 }
 
 const generateColumns = async () => {
-  // const columnNames = await getColumns('users')
-  // columns.value = [...columnNames, 'options'].map((column) => {
-  //   return {
-  //     title: column
-  //       ?.replace(/_/g, ' ')
-  //       ?.split(' ')
-  //       ?.map((word) => word?.charAt(0)?.toUpperCase() + word?.slice(1))
-  //       ?.join(' '),
-  //     dataIndex: column,
-  //     align: 'center',
-  //     key: column,
-  //     resizable: true,
-  //     width: 100,
-  //     minWidth: 100,
-  //     // ellipsis: true,
-  //   }
-  // })
   getColumns('users').then((columnNames) => {
     columns.value = [...columnNames, 'options'].map((column) => {
       return {
@@ -194,21 +252,21 @@ const generateColumns = async () => {
         resizable: true,
         width: 100,
         minWidth: 100,
-        hidden: column === 'options' ? showOptions : false,
-        // ellipsis: true,
+        hidden: ['options'].includes(column) ? showBatchOperations : false,
       }
     })
   })
 }
 
 const handleOk = (index: number) => {
-  // const modals = []
   console.log(index)
-  // modalVissible.value = false
+  submit.value = true
+  UpdateVissible.value = false
 }
 
 const handleUpdate = (record: any) => {
   currentRecord.value = toRaw(record)
+  submit.value = false
   UpdateVissible.value = true
 }
 
@@ -244,6 +302,26 @@ onMounted(() => {
 })
 </script>
 <style lang="less">
+.optionsButton,
+.showHide {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  .batchOperations {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+.tableNoSelection {
+  .ant-table-selection-col,
+  .ant-table-selection-column {
+    display: none;
+  }
+}
+
 .ant-pagination-prev,
 .ant-pagination-next {
   .ant-pagination-item-link {

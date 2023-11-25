@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { EnumPath } from '~/enums'
-import { BlankLayout } from '~/layouts'
+import { BlankLayout, DefaultLayout } from '~/layouts'
 
 export const basicRoutes: RouteRecordRaw[] = [
   {
@@ -33,4 +33,28 @@ export const basicRoutes: RouteRecordRaw[] = [
       },
     ],
   },
+  // {
+  //   path: '/users/allTransaction',
+  //   name: 'All Transactions',
+  //   component: DefaultLayout,
+  //   children: [
+  //     {
+  //       path: '/',
+  //       name: 'All Transactions',
+  //       component: () => import('~/views/users/components/allTransactions/allTransactions.vue'),
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: '/users/allWallet',
+  //   name: 'All Wallet',
+  //   component: DefaultLayout,
+  //   children: [
+  //     {
+  //       path: '/',
+  //       name: 'All Wallet',
+  //       component: () => import('~/views/users/components/allWallet/allWallet.vue'),
+  //     },
+  //   ],
+  // },
 ]

@@ -1,28 +1,14 @@
 <template>
-  <a-table rowKey="id" :columns="columns.filter((item) => !item.hidden)" :dataSource="dataSource" :loading="loading" />
+  <page-wrapper :title="'All Transactions'" content="Table of all user in the database ">
+    <a-table rowKey="id" :columns="columns" :dataSource="dataSource" :loading="loading" />
+  </page-wrapper>
 </template>
 
 <script setup lang="ts">
+import { PageWrapper } from '~/components/Page'
 import { getDataFromTable, getColumns, getSpecificData } from '~/supabase/login'
 import { ColumnsType } from 'ant-design-vue/es/table'
 
-const props = defineProps({
-  data: {
-    type: Object,
-    default() {
-      return {
-        id: 0,
-        name: '',
-        username: '',
-        password: '',
-        user_level: '',
-        status: '',
-        is_new: '',
-        google_secret: '',
-      }
-    },
-  },
-})
 const dataSource = ref<[] | object>([])
 const columns = ref<ColumnsType>([])
 const loading = ref<boolean>(true)
@@ -30,7 +16,7 @@ const loading = ref<boolean>(true)
 const getData = async (count = Number.MAX_SAFE_INTEGER, from = 0) => {
   loading.value = true
   const data = (await getDataFromTable('transaction', count, from)) as Array<object>
-  dataSource.value = data.filter((data) => data.user_id === props.data.id)
+  dataSource.value = data
   loading.value = false
 }
 
@@ -54,16 +40,10 @@ const generateColumns = async () => {
   })
 }
 
-watch(
-  () => props.data,
-  (newValue) => {
-    generateColumns()
-    getData()
-  },
-  {
-    immediate: true,
-  }
-)
+onMounted(() => {
+  generateColumns()
+  getData()
+})
 </script>
 
 <style scoped lang="less"></style>

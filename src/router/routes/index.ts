@@ -11,5 +11,4 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod]
   routeModuleList.push(...modList)
 })
-
 export const asyncRoutes = routeModuleList
