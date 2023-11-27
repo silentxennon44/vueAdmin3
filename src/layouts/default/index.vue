@@ -36,7 +36,7 @@ message.config({
   duration: 2,
   maxCount: 5,
   rtl: true,
-  prefixCls: 'ant-message',
+  prefixCls: 'my-message',
 })
 </script>
 
@@ -54,13 +54,13 @@ message.config({
 </style>
 
 <style lang="scss">
-div:has(> .ant-message) {
+div:has(> .my-message) {
   position: absolute;
   width: 100%;
   // height: 100vh;
   top: 0;
   // user-select: none;
-  .ant-message {
+  .my-message {
     position: absolute;
     z-index: 999999999;
     // transform: translate(50%, 0);
@@ -83,11 +83,11 @@ div:has(> .ant-message) {
     z-index: 1010;
     pointer-events: none;
 
-    .ant-message-notice {
+    .my-message-notice {
       padding: 8px;
       text-align: center;
 
-      .ant-message-notice-content {
+      .my-message-notice-content {
         display: inline-block;
         padding: 10px 16px;
         background: #fff;
@@ -98,28 +98,28 @@ div:has(> .ant-message) {
           0 9px 28px 8px rgba(0, 0, 0, 0.05);
         pointer-events: all;
 
-        .ant-message-custom-content {
-          .ant-message-error,
-          .ant-message-warn,
-          .ant-message-info {
+        .my-message-custom-content {
+          .my-message-error,
+          .my-message-warn,
+          .my-message-info {
             display: flex;
             align-items: center;
             justify-content: space-between;
           }
 
-          &.ant-message-info {
+          &.my-message-info {
             .anticon {
               color: #1890ff;
             }
           }
 
-          &.ant-message-warn {
+          &.my-message-warn {
             .anticon {
               color: #faad14;
             }
           }
 
-          &.ant-message-error {
+          &.my-message-error {
             .anticon {
               color: #f5222d;
             }

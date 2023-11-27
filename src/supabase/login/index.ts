@@ -44,7 +44,7 @@ export const supaCreateNewuser = async (table = '', params: { [key: string]: str
     .from(table)
     .insert([
       {
-        id: 1003,
+        id: 1004, // to beremoved on production
         name: params.username,
         username: params.username,
         password: params.password,

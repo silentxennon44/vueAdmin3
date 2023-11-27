@@ -1,6 +1,11 @@
 <template>
-  <a-menu v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" mode="inline" theme="dark"
-    :inline-collapsed="getCollapsed">
+  <a-menu
+    v-model:openKeys="openKeys"
+    v-model:selectedKeys="selectedKeys"
+    mode="inline"
+    theme="dark"
+    :inline-collapsed="getCollapsed"
+  >
     <template v-for="menu in menus" :key="menu.path">
       <menu-item v-if="menu.meta?.single" :menu="menu" />
       <menu-with-children v-else :current-depth="1" :parent-path="menu.path" :menu="menu" />

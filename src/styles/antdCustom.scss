@@ -18,6 +18,16 @@
   align-items: center;
 }
 
+.ant-table-tbody > tr > td {
+  vertical-align: middle;
+}
+
+.ant-image{
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
 img {
   /* Your styles for all img tags go here */
   max-width: 100%; /* Example: make sure images don't exceed their container width */

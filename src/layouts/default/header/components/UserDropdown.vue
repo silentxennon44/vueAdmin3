@@ -29,6 +29,6 @@ const user = useUserStore()
 
 const handleLogout = () => {
   user.logout()
-  message.success('用户退出成功')
+  message.success('用户退出成功', 2)
 }
 </script>
