@@ -1,3 +1,24 @@
+# 0.0.0 (2023-12-16)
+
+
+### Bug Fixes
+
+* (pop up message) fix positioning ([fcc71f6](https://github.com/silentxennon44/vueAdmin3/commit/fcc71f65592dfb15518eeb76f556152b700ea4a1))
+
+
+### Features
+
+* (general) table config ([8d98e07](https://github.com/silentxennon44/vueAdmin3/commit/8d98e075da62e7acc9734b4321ba44b95de02f6e))
+* (login) remodel logic ([6e43909](https://github.com/silentxennon44/vueAdmin3/commit/6e439091e265e503ac1c5432d62b420b3f083255))
+* (setup table) setup table ([e881071](https://github.com/silentxennon44/vueAdmin3/commit/e881071d85fd585caef4a6ef936eb23bee079f7e))
+* (table operations) add table operations ([13c60d6](https://github.com/silentxennon44/vueAdmin3/commit/13c60d68ddfd2ce001aa3ce6f8c0a49efd67108d))
+* (table) add table designs ([368058e](https://github.com/silentxennon44/vueAdmin3/commit/368058eeca8195c811707225675cf0ee5943d74d))
+* (tables) add other table layouts ([9cf8d2b](https://github.com/silentxennon44/vueAdmin3/commit/9cf8d2b09b91c49a62f8f6e8789e97a87a22f533))
+* **eslint:** fix eslint ([01d692b](https://github.com/silentxennon44/vueAdmin3/commit/01d692b02b95c8b10246fab42f85a8c5a8e5fe04))
+* **users table:** users table init design ([46a924c](https://github.com/silentxennon44/vueAdmin3/commit/46a924c2a5ebc618932ec90e65c60752846a00be))
+
+
+
 ## [1.2.2](https://github.com/developer-plus/vue-hbs-admin/compare/v1.2.1...v1.2.2) (2022-05-08)
 
 

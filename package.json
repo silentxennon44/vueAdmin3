@@ -1,7 +1,7 @@
 {
   "name": "scratch-game-app-backend",
   "private": true,
-  "version": "1.2.2",
+  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
