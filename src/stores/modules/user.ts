@@ -2,12 +2,19 @@ import { defineStore } from 'pinia'
 import { router } from '~/router'
 import { EnumCache, EnumPath } from '~/enums'
 import localCache from '~/utils/cache'
-import { getMenuList, getUserInfo, loginRequest } from '~/api/user'
+import { getMenuList, getUserInfo } from '~/api/user'
 import { isArray } from '~/utils/is'
 import { mapMenuToRoutes } from '~/utils/map-menu'
+import { message } from 'ant-design-vue'
 
 import type { EnumRole } from '~/enums'
 import type { UserInfo } from '#/store'
+import { LoginStateEnum, useLoginState } from '~/views/login/useLogin'
+import { authenticator } from 'otplib'
+import { supaCreateNewuser, supaCheckIfAccountExist, supaUpdateIsNew } from '~/supabase/login'
+import { toRaw } from 'vue'
+
+const { setLoginState } = useLoginState()
 
 interface UserState {
   token?: string
@@ -21,7 +28,7 @@ export const useUserStore = defineStore('user', {
     token: '',
     userInfo: null,
     roleList: [],
-    menuList: []
+    menuList: [],
   }),
 
   getters: {
@@ -39,7 +46,7 @@ export const useUserStore = defineStore('user', {
 
     getMenuList(): any[] {
       return this.menuList
-    }
+    },
   },
 
   actions: {
@@ -69,50 +76,120 @@ export const useUserStore = defineStore('user', {
     },
 
     async loginAction(account: { username: string; password: string }) {
-      try {
-        const result = await loginRequest(account)
-        const { token } = result
+      const data = await supaCheckIfAccountExist(account.username, account.password)
+      if (!data || !data.length) return message.error('Invalid Username or Password', 2)
+      // if (!data[0].is_new || !data[0].is_new) return message.error('Malformed data recieved please try again later', 2)
+      const is_new = Boolean(data[0].is_new)
 
-        // save token
-        this.setToken(token)
-        this.afterLoginAction()
+      this.setUserInfo(data[0])
+
+      if (is_new) {
+        return setLoginState(LoginStateEnum.FIRST_LOGIN)
       }
-      catch (error) {
-        return Promise.reject(error)
+      setLoginState(LoginStateEnum.ATHENTICATOR)
+
+      // const isValid = authenticator.check(token, secret);
+
+      // if (!account.otp) {
+      //   const data = await supaCheckIfAccountExist(account.username, account.password)
+      //   if (data && data.length)
+      //     return message.error('OTP is required for registered users!', 2)
+
+      //   const newUsersData = await postSupabaseData('users', account);
+
+      //   if (newUsersData.error) return message.error(newUsersData.message)
+
+      //   message.success(newUsersData.message)
+      //   console.log(newUsersData)
+
+      //   setLoginState(LoginStateEnum.ATHENTICATOR)
+
+      // } else {
+      //   // const user = await supaCheckIfAccountExist(account.username, account.password)
+      //   // if (user && user.length && user[0].password !== account.password)
+      //   //   return message.error('Incorrect Password!', 2)
+      //   try {
+      //     // const result = await loginRequest(account)
+      //     const result = await supaLoginRequest('users', account)
+
+      //     if (result && result.length === 0)
+      //       return message.error('Incorrect Username or Password!', 2)
+
+      //     if (checkIfValidGoogleAuthenticatorCode(result[0].google_secret, account.otp)) {
+      //       this.setToken('token')
+      //       this.afterLoginAction()
+      //     }
+      //     // if (result?.token) {
+      //     //     const { token } = result
+
+      //     //     // save token
+      //     //     this.setToken(token)
+      //     //     this.afterLoginAction()
+      //     // } else {
+      //     // }
+      //   }
+      //   catch (error) {
+      //     return Promise.reject(error)
+      //   }
+      // }
+    },
+
+    async authenticateAction(data: { otp: string }) {
+      const { google_secret, is_new, username } = toRaw(this.userInfo) ?? localCache.getCache(EnumCache.USER_INFO_KEY)
+      // const { google_secret } = localCache.getCache(EnumCache.USER_INFO_KEY)[0]
+      const isValid = authenticator.check(data.otp, google_secret)
+      if (!isValid) return message.error('Invalid Code')
+      message.info('Login Success. Welcome!')
+
+      if (is_new) {
+        const updateRecord = await supaUpdateIsNew('users', username)
+        if (updateRecord.error) return message.error('Something went wrong. Please try again later')
       }
+      const genRanHex = (size: number) =>
+        [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('')
+      // localCache.setCache(EnumCache.TOKEN_KEY, genRanHex(15))
+      this.setToken(genRanHex(15))
+      this.afterLoginAction()
+      setLoginState(LoginStateEnum.LOGIN)
     },
 
     async afterLoginAction() {
-      if (!this.getToken)
-        return null
+      // if (!this.getToken)
+      //   return null
 
       // get user info
-      await this.getUserInfoAction()
+      // await this.getUserInfoAction()
 
       // get menu list
-      await this.getMenuListAction()
+      // await this.getMenuListAction()
+      // const userInfo = await getUserInfo()
+      router.push(EnumPath.USERS)
 
-      router.push(EnumPath.HOME)
+      // if (userInfo.is_new && Boolean(userInfo.is_new)) {
+      //   setLoginState(LoginStateEnum.ATHENTICATOR)
+      // } else {
+      //   router.push(EnumPath.HOME)
+      // }
     },
 
     logout() {
       this.setToken(undefined)
       this.setUserInfo(null)
-
+      localCache.removeCache(EnumCache.USER_INFO_KEY)
+      localCache.removeCache(EnumCache.TOKEN_KEY)
+      localCache.removeCache(EnumCache.ROLES_KEY)
       router.push(EnumPath.LOGIN)
     },
 
     async getUserInfoAction(): Promise<UserInfo | null> {
-      if (!this.getToken)
-        return null
+      if (!this.getToken) return null
 
       const userInfo = await getUserInfo()
       const { roles = [] } = userInfo
       if (isArray(roles)) {
-        const roleList = roles.map(item => item.value) as EnumRole[]
+        const roleList = roles.map((item) => item.value) as EnumRole[]
         this.setRoleList(roleList)
-      }
-      else {
+      } else {
         userInfo.roles = []
         this.setRoleList([])
       }
@@ -121,12 +198,11 @@ export const useUserStore = defineStore('user', {
     },
 
     async getMenuListAction(): Promise<any> {
-      if (!this.getToken)
-        return null
+      if (!this.getToken) return null
 
       const menuList = await getMenuList()
 
       this.setMenuList(menuList)
-    }
-  }
+    },
+  },
 })

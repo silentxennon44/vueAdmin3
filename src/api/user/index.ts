@@ -4,7 +4,7 @@ import type { Account, LoginInfo } from './types'
 
 enum API {
   Login = '/login',
-  UserInfo = '/user/info',
+  UserInfo = '/userinfo',
   MenuList = '/menu/list'
 }
 
@@ -12,9 +12,6 @@ export function loginRequest(account: Account) {
   return request.post<LoginInfo>({
     url: import.meta.env.VITE_API + API.Login,
     data: account,
-    headers: {
-      Action: 'manage_user'
-    }
   })
 }
 

@@ -2,6 +2,7 @@
   "username": "账号",
   "login": "登录",
   "password": "密码",
+  "otp": "一次性密码",
   "confirmPassword": "确认密码",
   "remember": "记住账号",
   "forgot" : "忘记密码?",
@@ -11,6 +12,8 @@
   "useOtherLoginMethods": "其他登录方式",
   "usernameRequired": "必须输入用户名",
   "passwordRequired": "必须输入密码",
+  "otpRequired": "必须输入验证器",
+  "confirmPasswordRequired": "必须输入确认密码",
   "phoneNumber": "手机号",
   "verificationCode": "短信验证码",
   "passwordResetNotAvailable": "暂不支持重置密码～",
@@ -18,5 +21,12 @@
   "registerNotAvailable": "暂不支持注册账号～",
   "qrLogin": "扫码后点击\"确认\"，即可完成登录",
   "getVerification":"获取验证码",
-  "resendAfter":"{time}秒后重新获取"
+  "resendAfter":"{time}秒后重新获取",
+  "qrUsername":"生成二维码之前需要输入用户名",
+  "generateQR":"生成谷歌身份验证器二维码",
+  "googleOTP":"谷歌身份验证器代码",
+  "continueRegister":"继续注册",
+  "registerContinueModalContent":"你是否已经扫描了二维码并将其绑定到你的谷歌身份验证器？",
+  "registerSuccess": "注册成功！",
+  "registerFailed": "注册失败！"
 }

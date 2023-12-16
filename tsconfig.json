@@ -14,6 +14,7 @@
     "lib": ["esnext", "dom"],
     "incremental": false,
     "skipLibCheck": true,
+    "noImplicitAny":false,
     "allowJs":true,
     "types": ["vite/client"],
     "paths": {

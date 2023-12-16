@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import pkg from './package.json'
 import { wrapperEnv } from './build/utils'
 import setupVitePlugins from './build/plugins'
-import { createProxy } from './build/proxy'
+// import { createProxy } from './build/proxy'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -14,7 +14,7 @@ function pathResolve(dir: string) {
 const { dependencies, devDependencies, name, version } = pkg
 const __APP_INFO__ = {
   pkg: { dependencies, devDependencies, name, version },
-  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
+  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
 }
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
@@ -25,8 +25,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   // The boolean type read by loadEnv is a string. This function can be converted to boolean type
   const viteEnv = wrapperEnv(env)
 
-  const { VITE_PUBLIC_PATH, VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE }
-    = viteEnv
+  const { VITE_PUBLIC_PATH, VITE_PORT, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv
 
   const isBuild = command === 'build'
 
@@ -37,13 +36,17 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       alias: [
         {
           find: /~\//,
-          replacement: `${pathResolve('src')}/`
+          replacement: `${pathResolve('src')}/`,
         },
         {
           find: /#\//,
-          replacement: `${pathResolve('types')}/`
-        }
-      ]
+          replacement: `${pathResolve('types')}/`,
+        },
+        // {
+        //   find: 'crypto',
+        //   replacement: './node_modules/sockjs-client/lib/utils/browser-crypto.js',
+        // },
+      ],
     },
 
     // server: {
@@ -56,14 +59,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     // },
 
     esbuild: {
-      pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
+      pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : [],
     },
 
     define: {
-      __APP_INFO__: JSON.stringify(__APP_INFO__)
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
 
     // The vite plugin used by the project. The quantity is large, so it is separately extracted and managed
-    plugins: setupVitePlugins(viteEnv, isBuild)
+    plugins: setupVitePlugins(viteEnv, isBuild),
   }
 }

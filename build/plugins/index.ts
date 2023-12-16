@@ -8,6 +8,11 @@ import setupIcons from './icons'
 import setupAutoImport from './auto-import'
 import setupVueComponents from './vue-components'
 import setupMockServer from './mock'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
+// import pluginSvgVue from '@vuetter/vite-plugin-vue-svg'
+// import svgPlugin from 'vite-plugin-svg'
+// import svgLoader from 'vite-svg-loader'
+// import VueSvgLoader from 'vue-svg-loader'
 
 export default function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
   const { VITE_USE_MOCK } = viteEnv
@@ -17,8 +22,17 @@ export default function setupVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     Unocss(),
     VueI18nPlugin({
       runtimeOnly: false, // <--- add this
-      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**') // provide a path to the folder where you'll store translation data
-    })
+      include: resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**'), // provide a path to the folder where you'll store translation data
+    }),
+    nodePolyfills({
+      include: ['crypto', 'stream'],
+    }),
+    // pluginSvgVue(),
+    // svgLoader({
+    //   defaultImport: 'url',
+    // }),
+    // VueSvgLoader(),
+    // svgPlugin()
   ]
 
   // unplugin-auto-import

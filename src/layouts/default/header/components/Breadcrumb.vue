@@ -1,6 +1,6 @@
 <template>
   <a-breadcrumb class="!ml-2">
-    <a-breadcrumb-item v-for="(item,index) in routes" :key="index">
+    <a-breadcrumb-item v-for="(item, index) in routes" :key="index">
       {{ item.meta.title }}
     </a-breadcrumb-item>
   </a-breadcrumb>
@@ -13,6 +13,6 @@ const route = useRoute()
 const routes = ref<RouteLocationMatched[]>([])
 
 watchEffect(() => {
-  routes.value = route.matched.filter(item => !!item.meta?.title)
+  routes.value = route.matched.filter((item) => !!item.meta?.title)
 })
 </script>

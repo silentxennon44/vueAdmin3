@@ -1,6 +1,7 @@
 {
   "username": "Username",
   "password": "Password",
+  "otp": "OTP",
   "confirmPassword": "Confirm Password",
   "remember": "Remember Me",
   "login": "Log In",
@@ -11,6 +12,8 @@
   "useOtherLoginMethods": "Other login methods",
   "usernameRequired": "Username is required",
   "passwordRequired": "Password is required",
+  "confirmPasswordRequired": "Confirm Password is required",
+  "otpRequired": "Authenticator is required",
   "phoneNumber": "Phone number",
   "verificationCode": "Verification Code",
   "passwordResetNotAvailable": "Password reset is not supported yet~",
@@ -18,5 +21,12 @@
   "registerNotAvailable": "Registering an account is not currently supported～",
   "qrLogin": "After scanning the QR code, click \"Confirm\" to complete the login.",
   "getVerification":"Get Verification Code",
-  "resendAfter":"Resend after {time} seconds"
+  "resendAfter":"Resend after {time} seconds",
+  "qrUsername":"Username is required before generating QR code",
+  "generateQR":"Generate Google Authenticator QR Code",
+  "googleOTP":"Google Authenticator Code",
+  "continueRegister":"Continue with Registration",
+  "registerContinueModalContent":"Have you scanned the QR code and bind it to your Google Authenticator?",
+  "registerSuccess":"Registration Succesful!",
+  "registerFailed":"Registration Failed!"
 }

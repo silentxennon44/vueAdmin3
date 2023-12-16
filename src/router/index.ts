@@ -8,7 +8,7 @@ import { setupDynamicRoutes } from './routes/plugins/dynamicRoutes'
 export const router = createRouter({
   routes: [...basicRoutes, ...asyncRoutes],
   history: createWebHistory(),
-  scrollBehavior: () => ({ left: 0, top: 0 })
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
 export function setupRouter(app: App) {

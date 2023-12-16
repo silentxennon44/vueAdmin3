@@ -1,4 +1,10 @@
 {
   "reset": "Reset",
-  "return": "Return"
+  "return": "Return",
+  "qrCodeMessage": "Once you scanned the QR code, click the return button.",
+  "enter": "Enter",
+  "imagePreview": "Click on image to enlarge.",
+  "confirm": "Confirm",
+  "404message": "Sorry, the page that you are trying to visit look like does not exist",
+  "signOut": "Sign Out"
 }

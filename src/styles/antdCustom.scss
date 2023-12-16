@@ -1,0 +1,40 @@
+.ant-message-custom-content{
+  &.ant-message-error,
+  &.ant-message-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.ant-back-top{
+  bottom: 80px !important;
+  right: 10px !important;
+}
+
+.ant-image-preview-img-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-table-tbody > tr > td {
+  vertical-align: middle;
+}
+
+.ant-image{
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  /* Your styles for all img tags go here */
+  max-width: 100%; /* Example: make sure images don't exceed their container width */
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}

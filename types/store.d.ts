@@ -1,4 +1,3 @@
-
 export interface UserInfo {
   userId: string | number
   username: string
@@ -7,4 +6,7 @@ export interface UserInfo {
   desc?: string
   homePath?: string
   roles: any
+  qr?: string
+  google_secret?: string
+  is_new?: boolean
 }
